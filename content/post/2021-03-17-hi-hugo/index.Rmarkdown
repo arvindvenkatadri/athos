@@ -1,0 +1,35 @@
+---
+title: Hi Hugo
+author: 'Arvind Venkatadri'
+date: '2021-03-17'
+slug: hi-hugo
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-03-17T09:51:15+05:30'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+```{r}
+library(tidyverse)
+summary(diamonds)
+```
+
+```{r echo=FALSE}
+library(palmerpenguins)
+dplot <- ggplot(penguins, aes(x = bill_length_mm, 
+                   y = body_mass_g, 
+                   colour = island)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  guides(colour = FALSE) +
+  theme_bw()
+dplot
+```
+
