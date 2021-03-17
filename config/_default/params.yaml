@@ -20,19 +20,19 @@ twitter: ''
 
 # Contact (edit or remove options as required)
 
-email: test@example.org
-phone: 888 888 88 88
-address:
-  street: 450 Serra Mall
-  city: Stanford
-  region: CA
-  postcode: '94305'
-  country: United States
-  country_code: US
+email: arvind.venkatadri@manipal.edu
+phone: 
+address: 
+  street: 40/D Marilingaiah Building, 2nd Cross Road, Yelahanka New Town, KHB Colony,
+  city: Bangalore
+  region: Karnataka
+  postcode: '560104'
+  country: India
+  country_code: IN
 coordinates:
-  latitude: '37.4275'
-  longitude: '-122.1697'
-directions: Enter Building 1 and take the stairs to Office 200 on Floor 2
+  latitude: '13.107744014802934'
+  longitude: '77.57606155523334'
+directions: Enter Srishti N3 Building, Floor 2, Staff Room ( Yellow Door)
 office_hours:
   - 'Monday 10:00 to 13:00'
   - 'Wednesday 09:00 to 10:00'
@@ -41,7 +41,7 @@ contact_links:
   - icon: twitter
     icon_pack: fab
     name: DM Me
-    link: 'https://twitter.com/Twitter'
+    link: 'https://twitter.com/arvind_v'
   - icon: skype
     icon_pack: fab
     name: Skype Me

@@ -1,27 +1,25 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: My research interests include TRIZ, Computing in R, Complexity Science, and Literature.
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
-email: ""
+  - course: Masters in Engineering(Electronics and Communications)
+    institution: IIT Roorkee, Roorkee, India
+    year: 1987
+  - course: Bachelors in Engineering(Electronics and Communications)
+    institution: R. V. College of Engineering, Bangalore, India
+    year: 1985
+email: "arvind.venkatadri@manipal.edu"
 highlight_name: false
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- TRIZ and Problems Solving
+- Computation in R ( Data Visualization, Machine Learning)
+- Design using Open Source Electronics Hardware
+- Complexity Science
+- Literature
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: Srishti Manipal Institute of Art, Design, and Technology
+  url: https://www.srishtimanipalinstitute.in/
+role: Faculty Member
 social:
 - icon: envelope
   icon_pack: fas
@@ -31,22 +29,20 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
+  link: https://twitter.com/arvind_v
 - icon: graduation-cap
   icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: https://scholar.google.co.uk/citations?user=????????
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/arvindvenkatadri
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
+  link: https://www.linkedin.com/in/arvindvenkatadri/
 superuser: true
-title: Nelson Bighetti
+title: Arvind Venkatadri
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+Arvind Venkatadri is a Faculty Member at the Srishti Manipal Institute of Art, Design, and Technology (SMI). His research/teaching interests include TRIZ, Computation in R, Design using Open Source Electronics Hardware, and Complexity Science. He is part of the School of Foundation Studies at SMI.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "media/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
