@@ -1,18 +1,18 @@
 ---
 date: "2021-01-01"
-title: Contextual Enquiry
-subtitle: Basics of Metaphors, Flow, and Play
+title: Metaphors, Flow, and TRIZ (Contextual Enquiry)
 type: book
 weight: 20
 ---
 
-- Understand Metaphors and Analogic Thinking ( after Lakoff and Johnson ). 
-- Link that to the Creativity Systems Model ( after Mihaly Csikszentmihalyi )
-- Understand Flow and Play ( after Mihaly Csikszentmihalyi ).
+- Understand {{<hl>}}Metaphors and Analogic Thinking{{</hl>}} ( after Lakoff and Johnson ). 
+- Link that to the {{<hl>}}Creativity Systems Model{{</hl>}} ( after Mihaly Csikszentmihalyi )
+- Understand {{<hl>}}Flow{{</hl>}} and Play ( after Mihaly Csikszentmihalyi )
+- Appreciate Bourdieux's Idea of {{<hl>}}Cultural Capital{{</hl>}} and use it to Play
 
 <!--more-->
 
-{{< icon name="clock" pack="fas" >}} 1-2 hours per week, for 8 weeks
+{{< icon name="clock" pack="fas" >}} 12 hours per week, for 5 weeks
 
 ## Learn
 

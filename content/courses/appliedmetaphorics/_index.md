@@ -6,7 +6,7 @@ title: "\U0001F4CA Applied Metaphorics"
 type: book
 ---
 
-{{< figure src="featured.jpg" >}}
+{{< figure src="inventor.jpg" >}}
 
 {{< toc hide_on="xl" >}}
 
