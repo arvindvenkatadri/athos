@@ -1,13 +1,14 @@
 ---
 date: "2021-01-01"
-title: Contextual Enquiry Basics of Metaphors, Flow, and Play
+title: Contextual Enquiry
+subtitle: Basics of Metaphors, Flow, and Play
 type: book
 weight: 20
 ---
 
-- Understand Metaphors and Analogic Thinking after Lakoff and Johnson. 
-- Link that to the Creativity Systems Model ( after Mihaly Csikszentmihalyi)
-- Understand Flow and Play ( after Mihaly Csikszentmihalyi).
+- Understand Metaphors and Analogic Thinking ( after Lakoff and Johnson ). 
+- Link that to the Creativity Systems Model ( after Mihaly Csikszentmihalyi )
+- Understand Flow and Play ( after Mihaly Csikszentmihalyi ).
 
 <!--more-->
 

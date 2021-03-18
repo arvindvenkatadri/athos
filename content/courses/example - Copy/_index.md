@@ -16,7 +16,7 @@ type: book
 - Analogic Thinking and Metaphors in Design, Science and Literature
 - How to use Metaphors / Analogic Thinking {{<hl>}}TRIZ{{</hl>}}
 - {{<hl>}}TRIZ Inventive Principles{{</hl>}} and how to apply them in practice
-- Gain experience with the {{<hl>}}R / RStudio{{</hl>}}, including data visualization with {{<hl>}}ggplot{{</hl>}} and data wrangling with {{<hl>}}tidyverse{{</hl>}}
+- Gain experience with making graphical metaphors using {{<hl>}}R / RStudio{{</hl>}}, including data visualization with {{<hl>}}ggplot{{</hl>}} and data wrangling with {{<hl>}}tidyverse{{</hl>}}
 
 ## Program overview
 
@@ -53,4 +53,4 @@ There are no prerequisites for the first course.
 Twice a year.
 {{< /spoiler >}}
 
-{{< cta cta_text="View the course content" cta_link="python" >}}
+{{< cta cta_text="View the course content" cta_link="ce" >}}
