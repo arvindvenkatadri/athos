@@ -6,9 +6,7 @@ title: "\U0001F5CA How Things Work"
 type: book
 ---
 
-{{< figure src="social.jpg" >}}
-
-"3D Social Networking" by ccPixs.com is licensed under CC BY 2.0
+{{< figure src="social.jpg" title="3D Social Networking" caption="Image credit ccPixs.com, licensed under CC BY 2.0" >}}
 
 
 {{< toc hide_on="xl" >}}

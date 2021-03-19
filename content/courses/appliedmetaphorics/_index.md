@@ -2,7 +2,7 @@
 date: "2021-01-24"
 linkTitle: Applied Metaphorics
 summary: A 5 week course that teaches how to use Analogic Thinking and TRIZ to solve Inventive Problems.
-title: "\U0001F4CA Applied Metaphorics"
+title: "\U0001F5CA Applied Metaphorics"
 type: book
 ---
 
