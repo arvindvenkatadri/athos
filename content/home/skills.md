@@ -37,7 +37,7 @@ feature:
   icon_pack: fas
   name: Mathematics
   
-- description: 50%
+- description:
   icon: language
   icon_pack: fas
   name: Vernacular Languages
