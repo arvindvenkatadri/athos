@@ -15,19 +15,42 @@ subtitle:
 # Showcase personal skills or business features.
 # - Add/remove as many `feature` blocks below as you like.
 # - For available icons, see: https://wowchemy.com/docs/page-builder/#icons
+
 feature:
-- description: 90%
+- description: 
   icon: r-project
   icon_pack: fab
   name: R
-- description: 100%
-  icon: chart-line
+  
+- description: 
+  icon: graduation-cap
   icon_pack: fas
-  name: Statistics
-- description: 10%
-  icon: camera-retro
+  name: TRIZ
+  
+- description: 
+  icon: microchip
   icon_pack: fas
-  name: Photography
+  name: Electronics
+
+- description: 
+  icon: infinity
+  icon_pack: fas
+  name: Mathematics
+  
+- description: 50%
+  icon: language
+  icon_pack: fas
+  name: Vernacular Languages
+  
+- description:
+  icon: music
+  icon_pack: fas
+  name: Indian Classical Music
+
+- description: 
+  icon: book
+  icon_pack: fas
+  name: Reading and Literature
 
 # Uncomment to use emoji icons.
 #- icon = ":smile:"
