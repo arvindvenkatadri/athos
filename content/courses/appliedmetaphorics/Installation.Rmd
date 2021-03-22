@@ -3,6 +3,8 @@ title: "Installing R and RStudio"
 subtitle:  
 author: "Arvind Venkatadri"
 date: '`r Sys.Date()`'
+type: book
+weight: 40
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
