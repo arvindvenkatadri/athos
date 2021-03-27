@@ -8,7 +8,7 @@ tags: []
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-03-17T09:51:15+05:30'
+lastmod: 'r Sys.Date()'
 featured: no
 image:
   caption: ''
@@ -16,7 +16,10 @@ image:
   preview_only: no
 projects: []
 ---
-```{r}
+
+Testing with a demo post using blogdown + Hugo!
+
+```{r setup}
 library(tidyverse)
 summary(diamonds)
 ```
