@@ -1,0 +1,462 @@
+---
+title: "Networks as Metaphors"
+author: "Arvind Venkatadri"
+date: "26 March 2021"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This is an RMarkdown file to introduce the <code>Network Graph</code> set of Metaphors, using <code>R</code> code. We will connect various <code>concepts/ideas</code> and their <code>graph-metaphors</code>.</p>
+<p>The method followed will be based on PRIMM:</p>
+<ul>
+<li><p><strong>PREDICT</strong> what the code does, <strong>write predictions</strong></p></li>
+<li><p><strong>REUSE</strong> the code provided and check what happens</p></li>
+<li><p><strong>INFER</strong> what the <code>parameters</code> of the code do and <strong>write comments to explain</strong></p></li>
+<li><p><strong>MODIFY</strong> the <code>parameters</code> code provided to understand the <code>options</code> available. <strong>Write comments</strong> to show what you have aimed for and achieved.</p></li>
+<li><p><strong>MAKE</strong> : take an idea/concept of your own, and graph it.</p>
+<p>Write a short reflection at the end of the kind of metaphors you found in this work.</p></li>
+</ul>
+</div>
+<div id="graph-metaphors" class="section level1">
+<h1>Graph Metaphors</h1>
+<p>Network graphs are characterized by two key terms: <strong>nodes</strong> and <strong>edges</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><code>Nodes</code> : <strong>Entities</strong> (Individual Actors? People? Things? Ideas?) to be connected in the network. Synonyms: <code>vertices</code>. Nodes have <code>IDs</code>.</p></li>
+<li><p><code>Node list</code>: a data frame with a single column listing the node IDs found in the edge list. You can also add <strong>attribute columns</strong> to the data frame such as the names of the nodes or grouping variables. ( Type? Class? Family? Country? Subject? )</p>
+<table>
+<caption>Table 1: Nodes List</caption>
+<thead>
+<tr class="header">
+<th align="center">ID</th>
+<th>Node Name</th>
+<th>Attribute? Qualities? Categories? Family? Planet?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td>Ned</td>
+<td>Nursery School Teacher</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td>Jaguar Paw</td>
+<td>Apocalypto</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td>John Snow</td>
+<td>Epidemiologist</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><code>Edges</code>: <strong>Connections</strong> (Interactions? Relationships? Influence? Dependence?) between the entities. Synonyms: <code>links</code>, <code>ties</code>.</p></li>
+<li><p><code>Edge list</code>: data frame containing two columns: <strong>source node</strong> and <strong>destination node</strong> of an <code>edge</code>. Source and Destination have <code>node IDs</code>.</p></li>
+<li><p><code>Weighted network graph</code>: An edge list can also contain additional columns describing attributes of the edges such as a magnitude aspect for an edge. If the edges have a magnitude attribute the graph is considered weighted.</p>
+<table>
+<caption>Table 2: Edges List</caption>
+<colgroup>
+<col width="27%" />
+<col width="26%" />
+<col width="45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>From ID (=Source)</p>
+( From Node ID column!!)</th>
+<th><p>To ID (=Destination)</p>
+(From Node ID column!!)</th>
+<th>Weight? Attribute? Qualities? Categories?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>4</td>
+<td>3.5</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>3</td>
+<td>Financial Dealings</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>8</td>
+<td>Has a crush…</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><code>Layout</code>: A <strong>geometric</strong> arrangement of <code>nodes</code> and <code>edges</code>.</p>
+<p>Metaphors: Location? Spacing? Distance? Coordinates? Colour? Shape? Size? Provides visual insight due to the <code>arrangement</code>.</p></li>
+<li><p><code>Layout Algorithms</code> : <code>Method</code> to arranges <code>nodes</code> and <code>edges</code> with the aim of optimizing some <code>metric</code> .</p>
+<p>Metaphors: Nodes are <code>masses</code> and edges are <code>springs</code>. The Layout algorithm minimizes the stretching and compressing of all springs. (BTW, are the Spring Constants K the same for all springs?…)</p></li>
+<li><p><code>Directed and undirected network graph</code>:</p></li>
+</ol>
+<ul>
+<li><p>If the distinction between source and target is meaningful, the network is <strong>directed.</strong> If the distinction is not meaningful, the network is <strong>undirected</strong>. <strong>Directed edges</strong> represent an ordering of nodes, like a relationship extending from one nodes to another, where switching the direction would change the structure of the network. <strong>Undirected edges</strong> are simply links between nodes where order does not matter.</p>
+<p>Examples:</p>
+<ul>
+<li><p>The World Wide Web is an example of a directed network because hyperlinks connect one Web page to another, but not necessarily the other way around (Tyner, Briatte, and Hofmann 2017).</p></li>
+<li><p>Co-authorship networks represent examples of un-directed networks, where nodes are authors and they are connected by an edge if they have written a publication together (Tyner, Briatte, and Hofmann 2017).</p></li>
+<li><p>When people send e-mail to each other, the distinction between the sender (source) and the recipient (target) is clearly meaningful, therefore the network is directed.</p></li>
+</ul></li>
+</ul>
+<ol start="9" style="list-style-type: decimal">
+<li><code>Connected</code> and <code>Disconnected</code> graphs</li>
+</ol>
+<ul>
+<li>If there is <em>some</em> path from any node to any other node =&gt; Connected.</li>
+<li>Else Disconnected</li>
+</ul>
+</div>
+<div id="predictreuseinfer--1" class="section level1">
+<h1>Predict/Reuse/Infer -1</h1>
+<div id="using-tidygraph-and-ggraph" class="section level2">
+<h2>Using <code>tidygraph</code> and <code>ggraph</code></h2>
+<p><code>tidygraph</code> and <code>ggraph</code> are modern R packages for network data. Graph Data setup and manipulation is done in tidygraph and graph visualization with ggraph.</p>
+<ul>
+<li><p><code>tidygraph</code> Data -&gt; “Network Object” in R.</p></li>
+<li><p><code>ggraph</code> Network Object -&gt; Plots using a chosen layout/algo.</p></li>
+</ul>
+<p>Both leverage the power of <strong><code>igraph</code></strong>, which is the <strong>Big Daddy</strong> of all network packages.</p>
+<div id="using-the-star-wars-dataset" class="section level3">
+<h3>Using the Star Wars dataset</h3>
+<div id="read-the-data" class="section level4">
+<h4>1.Read the data</h4>
+<pre class="r"><code>starwars_nodes &lt;- read_csv(&quot;./Data/star-wars-network-nodes.csv&quot;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   name = col_character(),
+##   id = col_double()
+## )</code></pre>
+<pre class="r"><code>#
+
+starwars_edges &lt;- read_csv(&quot;./Data/star-wars-network-edges.csv&quot;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   source = col_character(),
+##   target = col_character(),
+##   weight = col_double()
+## )</code></pre>
+<pre class="r"><code>#
+
+
+starwars_nodes</code></pre>
+<pre><code>## # A tibble: 22 x 2
+##    name           id
+##    &lt;chr&gt;       &lt;dbl&gt;
+##  1 R2-D2           0
+##  2 CHEWBACCA       1
+##  3 C-3PO           2
+##  4 LUKE            3
+##  5 DARTH VADER     4
+##  6 CAMIE           5
+##  7 BIGGS           6
+##  8 LEIA            7
+##  9 BERU            8
+## 10 OWEN            9
+## # … with 12 more rows</code></pre>
+<pre class="r"><code>starwars_edges</code></pre>
+<pre><code>## # A tibble: 60 x 3
+##    source    target    weight
+##    &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;
+##  1 C-3PO     R2-D2         17
+##  2 LUKE      R2-D2         13
+##  3 OBI-WAN   R2-D2          6
+##  4 LEIA      R2-D2          5
+##  5 HAN       R2-D2          5
+##  6 CHEWBACCA R2-D2          3
+##  7 DODONNA   R2-D2          1
+##  8 CHEWBACCA OBI-WAN        7
+##  9 C-3PO     CHEWBACCA      5
+## 10 CHEWBACCA LUKE          16
+## # … with 50 more rows</code></pre>
+<pre class="r"><code>#</code></pre>
+</div>
+<div id="create-a-network-object-using-tidygraph" class="section level4">
+<h4>2.Create a network object using tidygraph:</h4>
+<p>Key function: <code>tbl_graph()</code>. (aka “tibble graph”)</p>
+<p>key arguments: <code>nodes</code>, <code>edges</code> and <code>directed</code></p>
+<pre class="r"><code>g &lt;- tbl_graph(nodes = starwars_nodes, edges = starwars_edges, directed = TRUE)
+g</code></pre>
+<pre><code>## # A tbl_graph: 22 nodes and 60 edges
+## #
+## # A directed acyclic simple graph with 2 components
+## #
+## # Node Data: 22 x 2 (active)
+##   name           id
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 R2-D2           0
+## 2 CHEWBACCA       1
+## 3 C-3PO           2
+## 4 LUKE            3
+## 5 DARTH VADER     4
+## 6 CAMIE           5
+## # … with 16 more rows
+## #
+## # Edge Data: 60 x 3
+##    from    to weight
+##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
+## 1     3     1     17
+## 2     4     1     13
+## 3    11     1      6
+## # … with 57 more rows</code></pre>
+<pre class="r"><code>#</code></pre>
+</div>
+<div id="plot-using-ggraph" class="section level4">
+<h4>3. Plot using <code>ggraph</code></h4>
+<p>Key functions:</p>
+<ul>
+<li><p><code>ggraph(layout = "......")</code>: Create classic node-edge diagrams; i.e. Sets up the graph. Rather like <code>ggplot</code> for networks!</p></li>
+<li><p><code>geom_node_point(aes(.....))</code>: Draws node as “points”.Alternatives exist! Remember the <code>geom</code>s that we have seen before!</p></li>
+<li><p><code>geom_edge_link(aes(.....))</code>: Draws edges as “links”. Alternatives exist!</p></li>
+<li><p><code>geom_node_text(aes(label = ......), repel = TRUE)</code>: Adds text labels (non-overlapping).</p></li>
+<li><p><code>labs(title = "....", subtitle = "....", caption = "....")</code>: Change main titles, axis labels and legend titles. We know this from our work with <code>ggplot</code>.</p></li>
+</ul>
+<pre class="r"><code>autograph(g)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/3a.Plot_starwars_using_ggraph-1.png" width="672" /></p>
+<pre class="r"><code>#</code></pre>
+<p>Describe this graph, in simple words here.</p>
+<pre class="r"><code># A more flexible,tweakable way
+p &lt;- ggraph(graph = g,  layout = &quot;kk&quot;) + 
+#
+ 
+  geom_edge_link(width = 2, color = &quot;pink&quot;) + 
+  #
+ 
+  geom_node_point(shape = 21, size = 8, fill = &quot;blue&quot;, color = &quot;green&quot;, stroke = 2) +
+  #
+
+  geom_node_text(aes(label = id), colour = &quot;yellow&quot;) +
+  #
+
+  labs(title = &quot;Whoo Hoo! My first silly Star Wars graph in R!&quot;,
+       subtitle = &quot;Why did Ramesh put me in this course...&quot;,
+       caption = &quot;Bro, they are doing cool things in the other classes...&quot;)
+
+p</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/3b.Plot_starwars_using_ggraph-1.png" width="672" /></p>
+<p>Let us <strong>Play</strong> with this graph and see if we can use some small changes. Colour? Fill? Width? Size? Stroke? Labs? Of course!</p>
+<pre class="r"><code># A more flexible,tweakable way
+p &lt;- ggraph(graph = g,  layout = &quot;kk&quot;) + 
+#
+ 
+  geom_edge_link(aes(width = weight)) + 
+  #
+ 
+  geom_node_point(shape = 21, size = 8, fill = &quot;blue&quot;, color = &quot;green&quot;, stroke = 2) +
+  #
+
+  geom_node_text(aes(label = id), colour = &quot;yellow&quot;) +
+  #
+
+  labs(title = &quot;Whoo Hoo! My next silly Star Wars graph in R!&quot;,
+       subtitle = &quot;Why did Ramesh put me in this course...&quot;,
+       caption = &quot;Bro, they are doing cool things in the other classes...&quot;)
+
+p</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/3b.Play_with_starwars_using_ggraph-1.png" width="672" /></p>
+<p>Now we are ready ( maybe ?) change the meaning and significance of the entire graph and each element within it, such as the <strong>aesthetics / mappings</strong> to achieve new meanings or insights.</p>
+<p>The elements we can tweak are:</p>
+<p>Node Parameters:</p>
+<pre><code>-   `alpha` (opacity; a value between 0 and 1)
+-   `colour` (colour of shapes 0-20 and border colour for 21-25)
+-   `fill` (fill colour for shape 21-25)
+-   `shape` (node shape; a value between 0 and 25)
+-   `size` (size of node)
+-   `stroke` (size of node border)</code></pre>
+<p>Edge Parameters:</p>
+<pre><code>-   `edge_colour` (colour of the edge, a fixed colour)
+-   `edge_width` (width of the edge, a fixed number) or 
+-   `aes(width = some_variable)` + `scale_edge_width(range = c(min_value, max_value))`
+-   `edge_linetype` (linetype of the edge, defaults to &quot;solid&quot;)
+-   `edge_alpha` (opacity; a value between 0 and 1)
+-   `label` (an edge label too!!)</code></pre>
+<pre class="r"><code># Numbered Code lines below: leave these commented
+# these are for reference
+# Uncommenting: Select all below + Shift/Ctrl/C
+
+ggraph(graph = g,layout = &quot;fr&quot;) +
+
+
+  # 1.geom_edge_link(width = 2, color = &quot;pink&quot;) +
+geom_edge_arc(aes(width = weight)) +
+
+
+  # 2.geom_node_point(shape = 21, size = 8, fill = &quot;blue&quot;, color = &quot;green&quot;, stroke = 2) +
+  geom_node_point(shape = 21, size = 8,fill = &quot;blue&quot;, color = &quot;green&quot;, stroke = 2) +
+
+  # 3.geom_node_text(aes(label = id), colour = &quot;yellow&quot;) +
+  geom_node_text(aes(label = id), colour = &quot;yellow&quot;) +
+
+  labs(title = &quot;Whoo Hoo! My first silly Star Wars graph in R!&quot;,
+       subtitle = &quot;Why did Ramesh put me in this course...&quot;,
+       caption = &quot;Bro, they are doing cool things in the other classes...&quot;)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/Modify-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="predictreuseinfer-2" class="section level1">
+<h1>Predict/Reuse/Infer-2</h1>
+<pre class="r"><code># Arc diagram
+ggraph(g, layout = &quot;linear&quot;) +
+  geom_edge_arc(aes(width = weight), alpha = 0.8) +
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_point(size = 4, colour = &quot;red&quot;) +
+  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
+  labs(edge_width = &quot;Weight&quot;) +
+  theme_graph()+
+  theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/arc%20diagram-1.png" width="672" /></p>
+<pre class="r"><code>#############################################</code></pre>
+<pre class="r"><code># Coord diagram, circular
+ggraph(g, layout = &quot;linear&quot;, circular = TRUE) + 
+  geom_edge_arc(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_point(size = 5,colour = &quot;red&quot;) + 
+  geom_node_text(aes(label = name),repel = TRUE, size = 3) +
+  labs(edge_width = &quot;Weight&quot;) +
+  theme_graph()+
+  theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/Coord%20Diagram%20circular-1.png" width="672" /></p>
+<pre class="r"><code>############################################</code></pre>
+</div>
+<div id="predictreuseinfer-3" class="section level1">
+<h1>Predict/Reuse/Infer-3</h1>
+<p>Another Full Example Using Grey’s anatomy dataset</p>
+<pre class="r"><code>grey_nodes &lt;- read_csv(&quot;./Data/greys-nodes.csv&quot;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   name = col_character(),
+##   sex = col_character(),
+##   race = col_character(),
+##   birthyear = col_double(),
+##   position = col_character(),
+##   season = col_double(),
+##   sign = col_character()
+## )</code></pre>
+<pre><code>## Warning: 2 parsing failures.
+## row col  expected    actual                     file
+##  51  -- 7 columns 1 columns &#39;./Data/greys-nodes.csv&#39;
+##  53  -- 7 columns 8 columns &#39;./Data/greys-nodes.csv&#39;</code></pre>
+<pre class="r"><code>grey_edges &lt;- read_csv(&quot;./Data/greys-edges.csv&quot;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   `Leah Murphy` = col_character(),
+##   `Arizona Robbins` = col_character()
+## )</code></pre>
+<pre class="r"><code>head(grey_nodes)</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##   name               sex   race  birthyear position  season sign  
+##   &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; 
+## 1 Addison Montgomery F     White      1967 Attending      1 Libra 
+## 2 Adele Webber       F     Black      1949 Non-Staff      2 Leo   
+## 3 Teddy Altman       F     White      1969 Attending      6 Pisces
+## 4 Amelia Shepherd    F     White      1981 Attending      7 Libra 
+## 5 Arizona Robbins    F     White      1976 Attending      5 Leo   
+## 6 Rebecca Pope       F     White      1975 Non-Staff      3 Gemini</code></pre>
+<pre class="r"><code>head(grey_edges)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   `Leah Murphy`   `Arizona Robbins`
+##   &lt;chr&gt;           &lt;chr&gt;            
+## 1 Leah Murphy     Alex Karev       
+## 2 Lauren Boswell  Arizona Robbins  
+## 3 Arizona Robbins Callie Torres    
+## 4 Callie Torres   Erica Hahn       
+## 5 Callie Torres   Alex Karev       
+## 6 Callie Torres   Mark Sloan</code></pre>
+<pre class="r"><code>ga &lt;- tbl_graph(nodes = grey_nodes, edges = grey_edges)
+autograph(ga)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/Greys_Anatomy_1-1.png" width="672" /></p>
+<pre class="r"><code>######################################################</code></pre>
+<pre class="r"><code>  ggraph(ga, layout = &quot;fr&quot;)  +
+  geom_edge_link0(edge_width = 0.5, colour = &quot;grey66&quot;) + 
+  geom_node_point(aes(fill = sex), size = 3,shape = 21)+
+  scale_fill_manual(values = c(&quot;F&quot;=&quot;#EA3456&quot;, &quot;M&quot;=&quot;#98EFAB&quot;, &quot;NA&quot; = &quot;black&quot;)) +
+  geom_node_text(aes(label = name), size = 1 + 0.5*degree(ga), 
+                 #family = &quot;serif&quot;, 
+                 repel = TRUE) +
+  scale_size(range = c(0.2, 3)) +
+  theme_graph() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Networks_files/figure-html/Greys_Anatomy_2-1.png" width="672" /></p>
+</div>
+<div id="make-1" class="section level1">
+<h1>Make-1</h1>
+<ol start="0" style="list-style-type: decimal">
+<li>Fire up a <em>new</em> RMarkdown. Write your name, file_name and date.</li>
+<li>Take any of the following datasets:</li>
+</ol>
+<ul>
+<li><p>Airline Data:</p>
+<ul>
+<li><p>Start with this bit of code in your second chunk, after <code>set up</code></p>
+<p><code>airline_nodes &lt;-read_csv("./Data/GephiWorkshop-AIRLINES-NODES.csv") ) %&gt;% mutate(Id = Id + 1)</code></p>
+<p><code>airline_edges &lt;- read_csv("./Data/GephiWorkshop-AIRLINES-EDGES.csv") %&gt;% mutate(Source = Source + 1, Target = Target + 1)</code></p></li>
+</ul></li>
+<li><p>The Famous Zachary Karate Club dataset</p>
+<ul>
+<li><p>Try <code>?karate</code> in the console</p></li>
+<li><p><code>data("karate",package= "igraphdata")</code></p></li>
+<li><p>Note that this is <strong>not</strong> a set of nodes, nor edges, <strong>but</strong> already a <strong>graph-object</strong>! You will need to just go ahead and plot using <code>ggraph</code>. No need to create a graph object using <code>tbl_graph</code>.</p></li>
+</ul></li>
+<li><p>Game of Thrones:</p>
+<ul>
+<li><code>GoT &lt;- read_rds("/Data/GoT/GoT.RDS")</code></li>
+<li>Note that this is a <strong>list</strong> of <strong>7</strong> graphs from Game of Thrones. Select one using <code>GoT[[index]]</code> where index = 1…7 and then plot directly.</li>
+</ul></li>
+<li><p>Any other graph dataset from <code>igraphdata</code> (type <code>?igraphdata</code> in console)</p></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Inspect the data.</li>
+<li>Create graph objects.</li>
+<li>Write comments in the code</li>
+</ol>
+</div>
+<div id="make-2" class="section level1">
+<h1>Make-2</h1>
+<p>This is in groups. The same groups that you have been working in.</p>
+<ol start="0" style="list-style-type: decimal">
+<li><p>Fire up a <em>new</em> RMarkdown. Write in your names, file_name and date.</p></li>
+<li><p>Go to: <a href="https://www.teachengineering.org/activities/view/uno_graphtheory_lesson01_activity2">Literary Networks</a></p>
+<ul>
+<li>Instructions are on Teams.</li>
+</ul></li>
+</ol>
+<!-- -->
+<ol start="2" style="list-style-type: decimal">
+<li><p><strong>Make your data</strong> using the instructions, from Friends or BBT… or LB or HIMYM….</p>
+<ul>
+<li><p>in the nodes CSV, use <code>Id</code> and <code>names</code> as your columns. Any other details in other columns to the right.</p></li>
+<li><p>in your <code>edges</code> use <code>from</code> and <code>to</code> are your first columns. Entries in these columns can be <code>names</code> or <code>Id</code>s but be consistent and don’t mix.</p></li>
+</ul></li>
+<li><p>Decide on 3 questions that you to create graphs for.</p></li>
+<li><p>Create graph objects.</p></li>
+<li><p>Write comments in the code</p></li>
+<li><p>Write Reflection ( ok, a short one!) <em>inside</em> your RMarkdown</p></li>
+<li><p>Group Submission: RMarkdown with joint authorship.</p></li>
+</ol>
+<p>Ask me for clarifications on what to do <em>after</em> you have read the Instructions in your group.</p>
+</div>
+<div id="read-more" class="section level1">
+<h1>Read more</h1>
+<p><a href="https://www.data-imaginist.com/2019/1-giraffe-2-giraffe-go/">Thomas Lin Pedersen - 1 giraffe, 2 giraffe, GO!</a></p>
+<p>Igraph: Network Analysis and Visualization. <a href="https://CRAN.R-project.org/package=igraph" class="uri">https://CRAN.R-project.org/package=igraph</a>.</p>
+<p>Pedersen, Thomas Lin. 2017a. Ggraph: An Implementation of Grammar of Graphics for Graphs and Networks. <a href="https://CRAN.R-project.org/package=ggraph" class="uri">https://CRAN.R-project.org/package=ggraph</a>.</p>
+<p>———. 2017b. Tidygraph: A Tidy Api for Graph Manipulation. <a href="https://CRAN.R-project.org/package=tidygraph" class="uri">https://CRAN.R-project.org/package=tidygraph</a>.</p>
+<p>Tyner, Sam, François Briatte, and Heike Hofmann. 2017. “Network Visualization with ggplot2.” The R Journal 9 (1): 27–59. <a href="https://journal.r-project.org/archive/2017/RJ-2017-023/index.html" class="uri">https://journal.r-project.org/archive/2017/RJ-2017-023/index.html</a>.</p>
+<p>Network Datasets <a href="https://icon.colorado.edu/#!/networks" class="uri">https://icon.colorado.edu/#!/networks</a></p>
+</div>

@@ -1,0 +1,458 @@
+---
+title: "The Grammar of Diagrams"
+date: "2021-03-25"
+author: "Arvind Venkatadri"
+output: 
+  html_document:
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(nomnoml)
+
+
+# Install plantuml using this command
+# devtools::install_github("rkrug/plantuml")
+
+
+library(plantuml)
+# Run this command *once8 after installing plantuml for the first time. Comment it out thereafter. 
+# plantuml_update()
+```
+
+# Introduction
+This module deals with how we can use Universal Markup Language ( UML) to make diagrams in R. 
+
+
+### `PlantUML` Sequence Diagram
+
+```{r Sequence_Diagram_1}
+plantuml(
+'@startuml
+Alice -> Bob: Authentication Request
+Alice <- Bob: Authentication Response
+Alice -> Bob: Another authentication Request
+
+note over Alice, Bob #palegreen: What the hell?
+note right of Bob #pink: What does she want !!
+
+Alice <- Bob: Another authentication Response
+note left of Alice #red: The lazy bum....
+
+skinparam handwritten true
+@enduml') %>% 
+  plot(., vector = FALSE)
+
+```
+
+### Sequence Diagram 2
+
+```{r Complex_Sequence_Diagram_2, fig.width = 10, fig.height = 15}
+plot(plantuml
+('@startuml
+actor Appa #yellow
+actor Shubha #palegreen
+
+box \"Parenting Challenges\" #Lightblue
+participant Appa
+participant Shubha
+
+Appa->Shubha: Hi Chubbu!
+...SEVERAL minutes later...
+Shubha--[#FF1333]->Appa: Yeah...
+Appa-[#red]>>Shubha: Yenna Chubbu...
+Shubha->Appa: I\'m bored
+
+alt Appa is angry
+  Appa-> Shubha: Chubbu you need to be more enthu!!
+  
+  note over Appa,Shubha #pink
+    She __never__ does **anything** useful...
+  end note
+  
+  Appa->Shubha: Why aren\'t you reading something?!!
+  Shubha -> Appa:;-(
+  
+  note right of Shubha #aqua
+    Why doesn\'t he go to office?
+  end note
+
+end
+
+alt Appa is yeah, like, cool
+  Appa->Shubha: Podi. Can you solve: <math>(ax^2 + bx + c = 0)</math>?
+  Shubha->Appa: Appa...
+  Appa-> Shubha: Ok, Ok...can we get pizza?
+  Shubha->Appa:;-D
+end box
+end
+@enduml'), vector = FALSE
+)
+```
+
+
+
+## PlantUML Mindmap
+
+```{r Mindmap-1}
+# Said to be a "nonUML" diagram
+plot(
+plantuml("
+  @startmindmap
++ OS
+++ Ubuntu
++++ Linux Mint
++++ Kubuntu
++++ Lubuntu
++++ KDE Neon
+++ LMDE
+++ SolydXK
+++ SteamOS
+++ Raspbian
+-- Windows 95
+-- Windows 98
+-- Windows NT
+--- Windows 8
+--- Windows 10
+@endmindmap"),vector = FALSE)
+```
+
+## `PlantUML` Gantt Chart
+
+```{r PlantUML-Gantt-1}
+plot(plantuml
+("@startgantt
+  [Assignment A1] lasts 6 days and is colored in Lavender/Blue
+  [Assignment A2] lasts 10 days and is colored in Lavender/Blue and starts at      [Assignment A1]'s end
+  [Assignment A3] lasts 8 days and is colored in Lavender/Blue and starts at [Assignment A2]'s end
+  [End of Course] lasts 1 days and is colored in Red and starts 2 days after [Assignment A3]'s end 
+  
+  [Reflection Writing] lasts 30 days and ends at [Assignment A3]'s end
+  [Make Visual Journal] lasts 9 days and is colored in Coral/Green and starts 3       days after [Assignment A1]'s end
+  [Make Poster for Home Alone] lasts 5 days and starts 3 days after [Assignment A2]'s end
+  [Clean up Miro Board] lasts 1 days and starts at [Assignment A3]'s end and ends at [End of Course]'s end
+  @endgantt
+  "),vector = FALSE
+)
+ 
+```
+
+```{r PlantUML-Gantt-2}
+plot(
+  plantuml
+("@startuml
+  [Assignment A1] lasts 6 days and is colored in Lavender/Blue
+  [Assignment A2] lasts 10 days and is colored in Lavender/Blue and starts at      [Assignment A1]'s end
+  [Assignment A3] lasts 8 days and is colored in Lavender/Blue and starts at [Assignment A2]'s end
+  [End of Course] lasts 1 days and is colored in Red and starts 2 days after [Assignment A3]'s end 
+  
+  [Reflection Writing] lasts 30 days and ends at [Assignment A3]'s end
+  [Make Visual Journal] lasts 9 days and is colored in Coral/Green and starts 3       days after [Assignment A1]'s end
+  [Make Poster for Home Alone] lasts 5 days and starts 3 days after [Assignment A2]'s end
+  [Clean up Miro Board] lasts 1 days and starts at [Assignment A3]'s end and ends at [End of Course]'s end
+  @enduml"),vector = FALSE
+)
+ 
+```
+
+## PlantUML flow chart
+
+```{r Flow_chart}
+# plot(
+#   plantuml
+# ("@startuml
+# (*) --> "Initialization"
+# if "Some Test" then
+# -->[true] "Some Activity"
+# --> "Another Activity"
+# -right-> (*)
+# else
+# ->[false] "Something Else"
+# --> [Ending Process] (*)
+# endif
+# @enduml"),vector = FALSE
+# )
+```
+
+```{r}
+# plot(plantuml
+#      ("@startuml
+#       if (A or B) then
+#          if (A?) then (yes)
+#          :A is true;
+#          else
+#          :B is true;
+#     endif
+#        :here, A or B are <b>true</b>;
+#     else
+#        :neither is true;
+#     endif
+#       :other stuff;
+#       @enduml), vector = FALSE)
+
+```
+
+
+## Using `nomnoml`
+
+The syntax options for nomnoml and what can be created is described here <https://nomnoml.com/>
+
+
+Association types are connectors between blocks( i.e. Classifiers)
+
+CSS colours <https://www.w3schools.com/cssref/css_colors.asp>
+Only these colours are permitted, so use either the names or these specific colour hash codes. Any general hash code will *not* render.
+
+
+```{nomnoml association-1}
+//association-1
+[a] - [b] 
+
+//association-2
+[b] -> [c] 
+
+//association_3
+[c] <-> [a]
+
+//dependency-1
+[a] <-->[d]
+
+//dependency-2
+#.ell: visual=ellipse fill=#fbfb09 bold
+#.arvind: visual=rhomb fill=#ff2234 bold
+[<ell>e]-->[a]
+//generalization-1
+[c]-:>[<arvind>k]
+
+//implementation --:>
+[k]--:>[d]
+```
+
+
+```{nomnoml association-2,svg=TRUE}
+//composition +-
+[a]+-[b]
+//composition +->
+[b]-+[c]
+//aggregation o-
+[c]o->[d]
+//aggregation o->
+[d]o->[a]
+//note --
+[d]--[everything happens;here]
+//hidden -/-
+[d]-/-[f]
+////////////////////////
+//weightless edge _>
+//[k]_>[d] //not working
+//weightless dashed__
+//[d]__[j] //not working
+```
+
+
+### Classifier Types
+These are different kinds of **blocks**.
+
+```{nomnoml, svg=TRUE}
+#direction:down
+#background:lightgrey
+#fill: fuchsia; green; purple
+#fillArrows: false
+#font: Courier
+[class]->[<abstract> abstract]
+[<abstract> abstract]-:>[<instance> instance]
+[<instance> instance]-:>[<note> note]
+[<note> note]-->[<reference> reference]
+```
+```{nomnoml}
+[<package> Suitcase|Contents]-->[<frame> handle|]
+[<database> All my Music]-->[<start> list]
+[<end> Ok done]-o>[<state> tired]
+```
+```{nomnoml}
+[<choice> choice]--->[<sync> sync]
+[<input> input]->[<sender> sender]
+[<receiver> receiver]o-[<transceiver> transceiver]
+```
+
+```{nomnoml}
+#font: CenturySchoolbook
+#fill: lightyellow
+#stroke: green
+
+[<actor> actor]---[<usecase> usecase]
+[<usecase> usecase]<-->[<label> label]
+[<usecase> usecase]-/-[<hidden> hidden]
+```
+
+```{nomnoml}
+[<table> table| a | 5 || b | 7]
+```
+
+```{nomnoml}
+[<table> table| c | 9 ]
+```
+## Directives
+Directives change the nature of the diagram rendered, by affective parameters like colour, direction and margins. 
+
+```{nomnoml}
+#import: filename
+#arrowSize: 1
+#bendSize: 0.3
+#direction: down | right
+#gutter: 5
+#edgeMargin: 0
+#gravity: 1
+#edges: hard | rounded
+#background: lightgrey
+
+//nested list of colours
+//#fill: #fcfcfc; #eee8d5; #fdf6e3
+#fill: lightgreen; pink;
+#fillArrows: false
+#font: Calibri
+#fontSize: 12
+#leading: 1.25
+#lineWidth: 3
+#padding: 8
+#spacing: 40
+#stroke: #33322E
+#title: filename
+#zoom: 1
+#acyclicer: greedy
+#ranker: network-simplex | tight-tree | longest-path
+[Pirate|eyeCount: Int|raid()|pillage()|
+  [beard]--[parrot]
+  [beard]-:>[foul mouth]
+  ]
+
+[<table>mischief | bawl | sing || yell | drink]
+
+[<abstract>Marauder]<:--[Pirate]
+[Pirate]- 0..7[mischief]
+[jollyness]_>[Pirate]
+[jollyness]->[rum]
+[jollyness]->[singing]
+[Pirate]-> *[rum|tastiness: Int|swig()]
+[Pirate]->[singing]
+[singing]<->[rum]
+
+[<start>st]->[<state>plunder]
+[plunder]->[<choice>more loot]
+[more loot]->[st]
+[more loot] no ->[<end>e]
+
+[<actor>Sailor] - [<usecase>shiver me;timbers]
+```
+
+## Custom classifier styles
+A directive that starts with "." define a **classifier's style**. The style is written as a space separated list of *modifiers* and *key/value pairs*.
+
+```{nomnoml}
+#.box: fill=#8f8 dashed
+#.blob: visual=ellipse title=bold
+#.arvind: visual=rhomb title=bold dashed fill=CornFlowerBlue
+[<box> GreenBox]
+[<blob> Blobby]
+[<arvind> Someone]
+```
+
+
+##Key/value pairs
+fill=(any css color)
+stroke=(any css color)
+align=center
+align=left
+direction=right
+direction=down
+
+visual=actor
+visual=class
+visual=database
+visual=ellipse
+visual=end
+visual=frame
+visual=hidden
+visual=input
+visual=none
+visual=note
+visual=package
+visual=receiver
+visual=rhomb
+visual=roundrect
+visual=sender
+visual=start
+visual=sync
+visual=table
+visual=transceiver
+Style title and text body
+title=left,italic,bold
+body=center,italic,bold
+
+## Text modifiers
+bold
+center
+italic
+left
+underline
+
+```{nomnoml}
+# .box: fill=#8f8 dashed
+# .blob: visual=rhomb title=bold fill=#8f8 dashed
+
+[A]-[B]
+[B]--[<usecase>C]
+[C]-[<box> D]
+[B]--[<blob> Jabba;TheHut]
+```
+
+```{nomnoml}
+[a] ->[b]
+[b] -:> [c]
+[c]o->[d]
+[d]-/-[e]
+```
+
+```{nomnoml}
+#fill: lightgreen; lightblue; lightyellow; grey; white
+
+[<table> table | c | 9 ]
+
+[R | [<table> Packages |
+         Base R |
+         [ <table> tidyverse| ggplot | tidyr | readr |
+             [<table> dplyr|
+                 magrittr | Others]]]]
+```
+```{nomnoml}
+#fill: lightgreen; lightblue; lightyellow; pink; white
+
+[RStudio | [R | [<table> Packages |
+                   Base R | [ tidyverse |
+                               ggplot | tidyr | readr |
+                               [dplyr]--[magrittr]
+                               [dplyr]--[Others]
+                             | tibble
+                             ]
+                 | lubridate | DiagrammeR | Lattice]]]
+```
+
+```{nomnoml mindmap}
+[Linux]+-[Ubuntu]
+[Linux]+-[Mint]
+[Ubuntu]--[Mint]
+[Linux]+-[Rosa Linux]
+[Linux]+-[Mx Linux]
+[Debian]-+[Linux]
+[Linux]--[Manjaro]
+[Manjaro]-+[Suse]
+
+[Fedora]-+[Linux]
+[Puppy Linux]-+[Linux]
+[Personal Pups]-+[Puppy Linux]
+
+```
+
+

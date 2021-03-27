@@ -1,0 +1,434 @@
+---
+title: "Networks as Metaphors"
+author: "Arvind Venkatadri"
+date: "26 March 2021"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+########################################
+# For General Data Manipulation
+library(tidyverse)
+
+########################################
+# Network Analysis Library (Handle data and Viz)
+library(igraph)
+library(netrankr)
+
+########################################
+# For Network "Manipulation"
+library(tidygraph)
+
+# For Network Visualization
+library(ggraph)
+library(graphlayouts)
+
+# For "Network" Datasets
+library(igraphdata)
+```
+
+# Introduction
+
+This is an RMarkdown file to introduce the `Network Graph` set of Metaphors, using `R` code. We will connect various `concepts/ideas` and their `graph-metaphors`.
+
+The method followed will be based on PRIMM:
+
+-   **PREDICT** what the code does, **write predictions**
+
+-   **REUSE** the code provided and check what happens
+
+-   **INFER** what the `parameters` of the code do and **write comments to explain**
+
+-   **MODIFY** the `parameters` code provided to understand the `options` available. **Write comments** to show what you have aimed for and achieved.
+
+-   **MAKE** : take an idea/concept of your own, and graph it.
+
+    Write a short reflection at the end of the kind of metaphors you found in this work.
+
+# Graph Metaphors
+
+Network graphs are characterized by two key terms: **nodes** and **edges**
+
+1.  `Nodes` : **Entities** (Individual Actors? People? Things? Ideas?) to be connected in the network. Synonyms: `vertices`. Nodes have `IDs`.
+
+2.  `Node list`: a data frame with a single column listing the node IDs found in the edge list. You can also add **attribute columns** to the data frame such as the names of the nodes or grouping variables. ( Type? Class? Family? Country? Subject? )
+
+    | ID  | Node Name  | Attribute? Qualities? Categories? Family? Planet? |
+    |:---:|------------|---------------------------------------------------|
+    |  1  | Ned        | Nursery School Teacher                            |
+    |  2  | Jaguar Paw | Apocalypto                                        |
+    |  3  | John Snow  | Epidemiologist                                    |
+
+    : Table 1: Nodes List
+
+3.  `Edges`: **Connections** (Interactions? Relationships? Influence? Dependence?) between the entities. Synonyms: `links`, `ties`.
+
+4.  `Edge list`: data frame containing two columns: **source node** and **destination node** of an `edge`. Source and Destination have `node IDs`.
+
+5.  `Weighted network graph`: An edge list can also contain additional columns describing attributes of the edges such as a magnitude aspect for an edge. If the edges have a magnitude attribute the graph is considered weighted.
+
+    +--------------------------+-------------------------+-------------------------------------------+
+    | From ID (=Source)        | To ID (=Destination)    | Weight? Attribute? Qualities? Categories? |
+    |                          |                         |                                           |
+    | ( From Node ID column!!) | (From Node ID column!!) |                                           |
+    +==========================+=========================+===========================================+
+    | 1                        | 4                       | 3.5                                       |
+    +--------------------------+-------------------------+-------------------------------------------+
+    | 2                        | 3                       | Financial Dealings                        |
+    +--------------------------+-------------------------+-------------------------------------------+
+    | 4                        | 8                       | Has a crush...                            |
+    +--------------------------+-------------------------+-------------------------------------------+
+
+    : Table 2: Edges List
+
+6.  `Layout`: A **geometric** arrangement of `nodes` and `edges`.
+
+    Metaphors: Location? Spacing? Distance? Coordinates? Colour? Shape? Size? Provides visual insight due to the `arrangement`.
+
+7.  `Layout Algorithms` : `Method` to arranges `nodes` and `edges` with the aim of optimizing some `metric` .
+
+    Metaphors: Nodes are `masses` and edges are `springs`. The Layout algorithm minimizes the stretching and compressing of all springs. (BTW, are the Spring Constants K the same for all springs?...)
+
+8.  `Directed and undirected network graph`:
+
+-   If the distinction between source and target is meaningful, the network is **directed.** If the distinction is not meaningful, the network is **undirected**. **Directed edges** represent an ordering of nodes, like a relationship extending from one nodes to another, where switching the direction would change the structure of the network. **Undirected edges** are simply links between nodes where order does not matter.
+
+    Examples:
+
+    -   The World Wide Web is an example of a directed network because hyperlinks connect one Web page to another, but not necessarily the other way around (Tyner, Briatte, and Hofmann 2017).
+
+    -   Co-authorship networks represent examples of un-directed networks, where nodes are authors and they are connected by an edge if they have written a publication together (Tyner, Briatte, and Hofmann 2017).
+
+    -   When people send e-mail to each other, the distinction between the sender (source) and the recipient (target) is clearly meaningful, therefore the network is directed.
+
+9.  `Connected` and `Disconnected` graphs
+
+-   If there is *some* path from any node to any other node =\> Connected.
+-   Else Disconnected
+
+# Predict/Reuse/Infer -1
+
+## Using `tidygraph` and `ggraph`
+
+`tidygraph` and `ggraph` are modern R packages for network data. Graph Data setup and manipulation is done in tidygraph and graph visualization with ggraph.
+
+-   `tidygraph` Data -\> "Network Object" in R.
+
+-   `ggraph` Network Object -\> Plots using a chosen layout/algo.
+
+Both leverage the power of **`igraph`**, which is the **Big Daddy** of all network packages.
+
+### Using the Star Wars dataset
+
+#### 1.Read the data
+
+```{r 1.Read_star_wars}
+starwars_nodes <- read_csv("./Data/star-wars-network-nodes.csv")
+#
+
+starwars_edges <- read_csv("./Data/star-wars-network-edges.csv")
+#
+
+
+starwars_nodes
+starwars_edges
+#
+```
+
+#### 2.Create a network object using tidygraph:
+
+Key function: `tbl_graph()`. (aka "tibble graph")
+
+key arguments: `nodes`, `edges` and `directed`
+
+```{r 2.Create_graph_object}
+g <- tbl_graph(nodes = starwars_nodes, edges = starwars_edges, directed = TRUE)
+g
+#
+
+
+
+
+
+
+```
+
+#### 3. Plot using `ggraph`
+
+Key functions:
+
+-   `ggraph(layout = "......")`: Create classic node-edge diagrams; i.e. Sets up the graph. Rather like `ggplot` for networks!
+
+-   `geom_node_point(aes(.....))`: Draws node as "points".Alternatives exist! Remember the `geom`s that we have seen before!
+
+-   `geom_edge_link(aes(.....))`: Draws edges as "links". Alternatives exist!
+
+-   `geom_node_text(aes(label = ......), repel = TRUE)`: Adds text labels (non-overlapping).
+
+-   `labs(title = "....", subtitle = "....", caption = "....")`: Change main titles, axis labels and legend titles. We know this from our work with `ggplot`.
+
+```{r 3a.Plot_starwars_using_ggraph}
+autograph(g)
+#
+
+
+
+
+```
+
+Describe this graph, in simple words here.
+
+```{r 3b.Plot_starwars_using_ggraph}
+
+# A more flexible,tweakable way
+p <- ggraph(graph = g,  layout = "kk") + 
+#
+ 
+  geom_edge_link(width = 2, color = "pink") + 
+  #
+ 
+  geom_node_point(shape = 21, size = 8, fill = "blue", color = "green", stroke = 2) +
+  #
+
+  geom_node_text(aes(label = id), colour = "yellow") +
+  #
+
+  labs(title = "Whoo Hoo! My first silly Star Wars graph in R!",
+       subtitle = "Why did Ramesh put me in this course...",
+       caption = "Bro, they are doing cool things in the other classes...")
+
+p
+```
+
+Let us **Play** with this graph and see if we can use some small changes. Colour? Fill? Width? Size? Stroke? Labs? Of course!
+
+```{r 3b.Play_with_starwars_using_ggraph}
+
+# A more flexible,tweakable way
+p <- ggraph(graph = g,  layout = "kk") + 
+#
+ 
+  geom_edge_link(aes(width = weight)) + 
+  #
+ 
+  geom_node_point(shape = 21, size = 8, fill = "blue", color = "green", stroke = 2) +
+  #
+
+  geom_node_text(aes(label = id), colour = "yellow") +
+  #
+
+  labs(title = "Whoo Hoo! My next silly Star Wars graph in R!",
+       subtitle = "Why did Ramesh put me in this course...",
+       caption = "Bro, they are doing cool things in the other classes...")
+
+p
+```
+
+Now we are ready ( maybe ?) change the meaning and significance of the entire graph and each element within it, such as the **aesthetics / mappings** to achieve new meanings or insights.
+
+The elements we can tweak are:
+
+Node Parameters:
+
+    -   `alpha` (opacity; a value between 0 and 1)
+    -   `colour` (colour of shapes 0-20 and border colour for 21-25)
+    -   `fill` (fill colour for shape 21-25)
+    -   `shape` (node shape; a value between 0 and 25)
+    -   `size` (size of node)
+    -   `stroke` (size of node border)
+
+Edge Parameters:
+
+    -   `edge_colour` (colour of the edge, a fixed colour)
+    -   `edge_width` (width of the edge, a fixed number) or 
+    -   `aes(width = some_variable)` + `scale_edge_width(range = c(min_value, max_value))`
+    -   `edge_linetype` (linetype of the edge, defaults to "solid")
+    -   `edge_alpha` (opacity; a value between 0 and 1)
+    -   `label` (an edge label too!!)
+
+```{r Modify}
+# Numbered Code lines below: leave these commented
+# these are for reference
+# Uncommenting: Select all below + Shift/Ctrl/C
+
+ggraph(graph = g,layout = "fr") +
+
+
+  # 1.geom_edge_link(width = 2, color = "pink") +
+geom_edge_arc(aes(width = weight)) +
+
+
+  # 2.geom_node_point(shape = 21, size = 8, fill = "blue", color = "green", stroke = 2) +
+  geom_node_point(shape = 21, size = 8,fill = "blue", color = "green", stroke = 2) +
+
+  # 3.geom_node_text(aes(label = id), colour = "yellow") +
+  geom_node_text(aes(label = id), colour = "yellow") +
+
+  labs(title = "Whoo Hoo! My first silly Star Wars graph in R!",
+       subtitle = "Why did Ramesh put me in this course...",
+       caption = "Bro, they are doing cool things in the other classes...")
+```
+
+# Predict/Reuse/Infer-2
+
+```{r arc diagram}
+# Arc diagram
+ggraph(g, layout = "linear") +
+  geom_edge_arc(aes(width = weight), alpha = 0.8) +
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_point(size = 4, colour = "red") +
+  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
+  labs(edge_width = "Weight") +
+  theme_graph()+
+  theme(legend.position = "top")
+#############################################
+
+
+
+
+
+
+
+```
+
+```{r Coord Diagram circular}
+# Coord diagram, circular
+ggraph(g, layout = "linear", circular = TRUE) + 
+  geom_edge_arc(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_point(size = 5,colour = "red") + 
+  geom_node_text(aes(label = name),repel = TRUE, size = 3) +
+  labs(edge_width = "Weight") +
+  theme_graph()+
+  theme(legend.position = "top")
+############################################
+
+
+
+
+
+
+
+
+
+```
+
+# Predict/Reuse/Infer-3
+
+Another Full Example Using Grey's anatomy dataset
+
+```{r Greys_Anatomy_1}
+grey_nodes <- read_csv("./Data/greys-nodes.csv")
+grey_edges <- read_csv("./Data/greys-edges.csv")
+head(grey_nodes)
+head(grey_edges)
+ga <- tbl_graph(nodes = grey_nodes, edges = grey_edges)
+autograph(ga)
+######################################################
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+```{r Greys_Anatomy_2}
+  ggraph(ga, layout = "fr")  +
+  geom_edge_link0(edge_width = 0.5, colour = "grey66") + 
+  geom_node_point(aes(fill = sex), size = 3,shape = 21)+
+  scale_fill_manual(values = c("F"="#EA3456", "M"="#98EFAB", "NA" = "black")) +
+  geom_node_text(aes(label = name), size = 1 + 0.5*degree(ga), 
+                 #family = "serif", 
+                 repel = TRUE) +
+  scale_size(range = c(0.2, 3)) +
+  theme_graph() +
+  theme(legend.position = "bottom")
+```
+
+# Make-1
+
+0.  Fire up a *new* RMarkdown. Write your name, file_name and date.
+1.  Take any of the following datasets:
+
+-   Airline Data:
+
+    -   Start with this bit of code in your second chunk, after `set up`
+
+        `airline_nodes <-read_csv("./Data/GephiWorkshop-AIRLINES-NODES.csv") ) %>% mutate(Id = Id + 1)`
+
+        `airline_edges <- read_csv("./Data/GephiWorkshop-AIRLINES-EDGES.csv") %>% mutate(Source = Source + 1, Target = Target + 1)`
+
+-   The Famous Zachary Karate Club dataset
+
+    -   Try `?karate` in the console
+
+    -   `data("karate",package= "igraphdata")`
+
+    -   Note that this is **not** a set of nodes, nor edges, **but** already a **graph-object**! You will need to just go ahead and plot using `ggraph`. No need to create a graph object using `tbl_graph`.
+
+-   Game of Thrones:
+
+    -   `GoT <- read_rds("/Data/GoT/GoT.RDS")`
+    -   Note that this is a **list** of **7** graphs from Game of Thrones. Select one using `GoT[[index]]` where index = 1...7 and then plot directly.
+
+-   Any other graph dataset from `igraphdata` (type `?igraphdata` in console)
+
+2.  Inspect the data.
+3.  Create graph objects.
+4.  Write comments in the code
+
+# Make-2
+
+This is in groups. The same groups that you have been working in.
+
+0.  Fire up a *new* RMarkdown. Write in your names, file_name and date.
+
+1.  Go to: [Literary Networks](https://www.teachengineering.org/activities/view/uno_graphtheory_lesson01_activity2)
+
+    -   Instructions are on Teams.
+
+<!-- -->
+
+2.  **Make your data** using the instructions, from Friends or BBT... or LB or HIMYM....
+
+    -   in the nodes CSV, use `Id` and `names` as your columns. Any other details in other columns to the right.
+
+    -   in your `edges` use `from` and `to` are your first columns. Entries in these columns can be `names` or `Id`s but be consistent and don't mix.
+
+3.  Decide on 3 questions that you to create graphs for.
+
+4.  Create graph objects.
+
+5.  Write comments in the code
+
+6.  Write Reflection ( ok, a short one!) *inside* your RMarkdown
+
+7.  Group Submission: RMarkdown with joint authorship.
+
+Ask me for clarifications on what to do *after* you have read the Instructions in your group.
+
+# Read more
+
+[Thomas Lin Pedersen - 1 giraffe, 2 giraffe, GO!](https://www.data-imaginist.com/2019/1-giraffe-2-giraffe-go/)
+
+Igraph: Network Analysis and Visualization. <https://CRAN.R-project.org/package=igraph>.
+
+Pedersen, Thomas Lin. 2017a. Ggraph: An Implementation of Grammar of Graphics for Graphs and Networks. <https://CRAN.R-project.org/package=ggraph>.
+
+---------. 2017b. Tidygraph: A Tidy Api for Graph Manipulation. <https://CRAN.R-project.org/package=tidygraph>.
+
+Tyner, Sam, François Briatte, and Heike Hofmann. 2017. "Network Visualization with ggplot2." The R Journal 9 (1): 27--59. <https://journal.r-project.org/archive/2017/RJ-2017-023/index.html>.
+
+Network Datasets <https://icon.colorado.edu/#!/networks>

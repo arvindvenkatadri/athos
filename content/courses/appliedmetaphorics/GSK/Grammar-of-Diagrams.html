@@ -1,0 +1,421 @@
+---
+title: "The Grammar of Diagrams"
+date: "2021-03-25"
+author: "Arvind Venkatadri"
+output: 
+  html_document:
+    toc_float: TRUE
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/es6shim/es6shim.js"></script>
+<script src="/rmarkdown-libs/es7shim/es7shim.js"></script>
+<script src="/rmarkdown-libs/graphre/graphre.js"></script>
+<script src="/rmarkdown-libs/nomnoml/nomnoml.js"></script>
+<script src="/rmarkdown-libs/nomnoml-binding/nomnoml.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This module deals with how we can use Universal Markup Language ( UML) to make diagrams in R.</p>
+<div id="plantuml-sequence-diagram" class="section level3">
+<h3><code>PlantUML</code> Sequence Diagram</h3>
+<pre class="r"><code>plantuml(
+&#39;@startuml
+Alice -&gt; Bob: Authentication Request
+Alice &lt;- Bob: Authentication Response
+Alice -&gt; Bob: Another authentication Request
+
+note over Alice, Bob #palegreen: What the hell?
+note right of Bob #pink: What does she want !!
+
+Alice &lt;- Bob: Another authentication Response
+note left of Alice #red: The lazy bum....
+
+skinparam handwritten true
+@enduml&#39;) %&gt;% 
+  plot(., vector = FALSE)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Diagrams_files/figure-html/Sequence_Diagram_1-1.png" width="672" /></p>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="sequence-diagram-2" class="section level3">
+<h3>Sequence Diagram 2</h3>
+<pre class="r"><code>plot(plantuml
+(&#39;@startuml
+actor Appa #yellow
+actor Shubha #palegreen
+
+box \&quot;Parenting Challenges\&quot; #Lightblue
+participant Appa
+participant Shubha
+
+Appa-&gt;Shubha: Hi Chubbu!
+...SEVERAL minutes later...
+Shubha--[#FF1333]-&gt;Appa: Yeah...
+Appa-[#red]&gt;&gt;Shubha: Yenna Chubbu...
+Shubha-&gt;Appa: I\&#39;m bored
+
+alt Appa is angry
+  Appa-&gt; Shubha: Chubbu you need to be more enthu!!
+  
+  note over Appa,Shubha #pink
+    She __never__ does **anything** useful...
+  end note
+  
+  Appa-&gt;Shubha: Why aren\&#39;t you reading something?!!
+  Shubha -&gt; Appa:;-(
+  
+  note right of Shubha #aqua
+    Why doesn\&#39;t he go to office?
+  end note
+
+end
+
+alt Appa is yeah, like, cool
+  Appa-&gt;Shubha: Podi. Can you solve: &lt;math&gt;(ax^2 + bx + c = 0)&lt;/math&gt;?
+  Shubha-&gt;Appa: Appa...
+  Appa-&gt; Shubha: Ok, Ok...can we get pizza?
+  Shubha-&gt;Appa:;-D
+end box
+end
+@enduml&#39;), vector = FALSE
+)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Diagrams_files/figure-html/Complex_Sequence_Diagram_2-1.png" width="960" /></p>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="plantuml-mindmap" class="section level2">
+<h2>PlantUML Mindmap</h2>
+<pre class="r"><code># Said to be a &quot;nonUML&quot; diagram
+plot(
+plantuml(&quot;
+  @startmindmap
++ OS
+++ Ubuntu
++++ Linux Mint
++++ Kubuntu
++++ Lubuntu
++++ KDE Neon
+++ LMDE
+++ SolydXK
+++ SteamOS
+++ Raspbian
+-- Windows 95
+-- Windows 98
+-- Windows NT
+--- Windows 8
+--- Windows 10
+@endmindmap&quot;),vector = FALSE)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Diagrams_files/figure-html/Mindmap-1-1.png" width="672" /></p>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="plantuml-gantt-chart" class="section level2">
+<h2><code>PlantUML</code> Gantt Chart</h2>
+<pre class="r"><code>plot(plantuml
+(&quot;@startgantt
+  [Assignment A1] lasts 6 days and is colored in Lavender/Blue
+  [Assignment A2] lasts 10 days and is colored in Lavender/Blue and starts at      [Assignment A1]&#39;s end
+  [Assignment A3] lasts 8 days and is colored in Lavender/Blue and starts at [Assignment A2]&#39;s end
+  [End of Course] lasts 1 days and is colored in Red and starts 2 days after [Assignment A3]&#39;s end 
+  
+  [Reflection Writing] lasts 30 days and ends at [Assignment A3]&#39;s end
+  [Make Visual Journal] lasts 9 days and is colored in Coral/Green and starts 3       days after [Assignment A1]&#39;s end
+  [Make Poster for Home Alone] lasts 5 days and starts 3 days after [Assignment A2]&#39;s end
+  [Clean up Miro Board] lasts 1 days and starts at [Assignment A3]&#39;s end and ends at [End of Course]&#39;s end
+  @endgantt
+  &quot;),vector = FALSE
+)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Diagrams_files/figure-html/PlantUML-Gantt-1-1.png" width="672" /></p>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>plot(
+  plantuml
+(&quot;@startuml
+  [Assignment A1] lasts 6 days and is colored in Lavender/Blue
+  [Assignment A2] lasts 10 days and is colored in Lavender/Blue and starts at      [Assignment A1]&#39;s end
+  [Assignment A3] lasts 8 days and is colored in Lavender/Blue and starts at [Assignment A2]&#39;s end
+  [End of Course] lasts 1 days and is colored in Red and starts 2 days after [Assignment A3]&#39;s end 
+  
+  [Reflection Writing] lasts 30 days and ends at [Assignment A3]&#39;s end
+  [Make Visual Journal] lasts 9 days and is colored in Coral/Green and starts 3       days after [Assignment A1]&#39;s end
+  [Make Poster for Home Alone] lasts 5 days and starts 3 days after [Assignment A2]&#39;s end
+  [Clean up Miro Board] lasts 1 days and starts at [Assignment A3]&#39;s end and ends at [End of Course]&#39;s end
+  @enduml&quot;),vector = FALSE
+)</code></pre>
+<p><img src="/courses/AppliedMetaphorics/GSK/Grammar-of-Diagrams_files/figure-html/PlantUML-Gantt-2-1.png" width="672" /></p>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="plantuml-flow-chart" class="section level2">
+<h2>PlantUML flow chart</h2>
+<pre class="r"><code># plot(
+#   plantuml
+# (&quot;@startuml
+# (*) --&gt; &quot;Initialization&quot;
+# if &quot;Some Test&quot; then
+# --&gt;[true] &quot;Some Activity&quot;
+# --&gt; &quot;Another Activity&quot;
+# -right-&gt; (*)
+# else
+# -&gt;[false] &quot;Something Else&quot;
+# --&gt; [Ending Process] (*)
+# endif
+# @enduml&quot;),vector = FALSE
+# )</code></pre>
+<pre class="r"><code># plot(plantuml
+#      (&quot;@startuml
+#       if (A or B) then
+#          if (A?) then (yes)
+#          :A is true;
+#          else
+#          :B is true;
+#     endif
+#        :here, A or B are &lt;b&gt;true&lt;/b&gt;;
+#     else
+#        :neither is true;
+#     endif
+#       :other stuff;
+#       @enduml), vector = FALSE)</code></pre>
+</div>
+<div id="using-nomnoml" class="section level2">
+<h2>Using <code>nomnoml</code></h2>
+<p>The syntax options for nomnoml and what can be created is described here <a href="https://nomnoml.com/" class="uri">https://nomnoml.com/</a></p>
+<p>Association types are connectors between blocks( i.e. Classifiers)</p>
+<p>CSS colours <a href="https://www.w3schools.com/cssref/css_colors.asp" class="uri">https://www.w3schools.com/cssref/css_colors.asp</a>
+Only these colours are permitted, so use either the names or these specific colour hash codes. Any general hash code will <em>not</em> render.</p>
+<pre class="nomnoml"><code>//association-1
+[a] - [b] 
+
+//association-2
+[b] -&gt; [c] 
+
+//association_3
+[c] &lt;-&gt; [a]
+
+//dependency-1
+[a] &lt;--&gt;[d]
+
+//dependency-2
+#.ell: visual=ellipse fill=#fbfb09 bold
+#.arvind: visual=rhomb fill=#ff2234 bold
+[&lt;ell&gt;e]--&gt;[a]
+//generalization-1
+[c]-:&gt;[&lt;arvind&gt;k]
+
+//implementation --:&gt;
+[k]--:&gt;[d]</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n//association-1\n[a] - [b] \n\n//association-2\n[b] -> [c] \n\n//association_3\n[c] <-> [a]\n\n//dependency-1\n[a] <-->[d]\n\n//dependency-2\n#.ell: visual=ellipse fill=#fbfb09 bold\n#.arvind: visual=rhomb fill=#ff2234 bold\n[<ell>e]-->[a]\n//generalization-1\n[c]-:>[<arvind>k]\n\n//implementation --:>\n[k]--:>[d]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>//composition +-
+[a]+-[b]
+//composition +-&gt;
+[b]-+[c]
+//aggregation o-
+[c]o-&gt;[d]
+//aggregation o-&gt;
+[d]o-&gt;[a]
+//note --
+[d]--[everything happens;here]
+//hidden -/-
+[d]-/-[f]
+////////////////////////
+//weightless edge _&gt;
+//[k]_&gt;[d] //not working
+//weightless dashed__
+//[d]__[j] //not working</code></pre>
+<div id="htmlwidget-2" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n//composition +-\n[a]+-[b]\n//composition +->\n[b]-+[c]\n//aggregation o-\n[c]o->[d]\n//aggregation o->\n[d]o->[a]\n//note --\n[d]--[everything happens;here]\n//hidden -/-\n[d]-/-[f]\n////////////////////////\n//weightless edge _>\n//[k]_>[d] //not working\n//weightless dashed__\n//[d]__[j] //not working","svg":false},"evals":[],"jsHooks":[]}</script>
+<div id="classifier-types" class="section level3">
+<h3>Classifier Types</h3>
+<p>These are different kinds of <strong>blocks</strong>.</p>
+<pre class="nomnoml"><code>#direction:down
+#background:lightgrey
+#fill: fuchsia; green; purple
+#fillArrows: false
+#font: Courier
+[class]-&gt;[&lt;abstract&gt; abstract]
+[&lt;abstract&gt; abstract]-:&gt;[&lt;instance&gt; instance]
+[&lt;instance&gt; instance]-:&gt;[&lt;note&gt; note]
+[&lt;note&gt; note]--&gt;[&lt;reference&gt; reference]</code></pre>
+<div id="htmlwidget-3" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n#direction:down\n#background:lightgrey\n#fill: fuchsia; green; purple\n#fillArrows: false\n#font: Courier\n[class]->[<abstract> abstract]\n[<abstract> abstract]-:>[<instance> instance]\n[<instance> instance]-:>[<note> note]\n[<note> note]-->[<reference> reference]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>[&lt;package&gt; Suitcase|Contents]--&gt;[&lt;frame&gt; handle|]
+[&lt;database&gt; All my Music]--&gt;[&lt;start&gt; list]
+[&lt;end&gt; Ok done]-o&gt;[&lt;state&gt; tired]</code></pre>
+<div id="htmlwidget-4" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n[<package> Suitcase|Contents]-->[<frame> handle|]\n[<database> All my Music]-->[<start> list]\n[<end> Ok done]-o>[<state> tired]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>[&lt;choice&gt; choice]---&gt;[&lt;sync&gt; sync]
+[&lt;input&gt; input]-&gt;[&lt;sender&gt; sender]
+[&lt;receiver&gt; receiver]o-[&lt;transceiver&gt; transceiver]</code></pre>
+<div id="htmlwidget-5" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n[<choice> choice]--->[<sync> sync]\n[<input> input]->[<sender> sender]\n[<receiver> receiver]o-[<transceiver> transceiver]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>#font: CenturySchoolbook
+#fill: lightyellow
+#stroke: green
+
+[&lt;actor&gt; actor]---[&lt;usecase&gt; usecase]
+[&lt;usecase&gt; usecase]&lt;--&gt;[&lt;label&gt; label]
+[&lt;usecase&gt; usecase]-/-[&lt;hidden&gt; hidden]</code></pre>
+<div id="htmlwidget-6" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n#font: CenturySchoolbook\n#fill: lightyellow\n#stroke: green\n\n[<actor> actor]---[<usecase> usecase]\n[<usecase> usecase]<-->[<label> label]\n[<usecase> usecase]-/-[<hidden> hidden]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>[&lt;table&gt; table| a | 5 || b | 7]</code></pre>
+<div id="htmlwidget-7" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n[<table> table| a | 5 || b | 7]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>[&lt;table&gt; table| c | 9 ]</code></pre>
+<div id="htmlwidget-8" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n[<table> table| c | 9 ]","svg":false},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="directives" class="section level2">
+<h2>Directives</h2>
+<p>Directives change the nature of the diagram rendered, by affective parameters like colour, direction and margins.</p>
+<pre class="nomnoml"><code>#import: filename
+#arrowSize: 1
+#bendSize: 0.3
+#direction: down | right
+#gutter: 5
+#edgeMargin: 0
+#gravity: 1
+#edges: hard | rounded
+#background: lightgrey
+
+//nested list of colours
+//#fill: #fcfcfc; #eee8d5; #fdf6e3
+#fill: lightgreen; pink;
+#fillArrows: false
+#font: Calibri
+#fontSize: 12
+#leading: 1.25
+#lineWidth: 3
+#padding: 8
+#spacing: 40
+#stroke: #33322E
+#title: filename
+#zoom: 1
+#acyclicer: greedy
+#ranker: network-simplex | tight-tree | longest-path
+[Pirate|eyeCount: Int|raid()|pillage()|
+  [beard]--[parrot]
+  [beard]-:&gt;[foul mouth]
+  ]
+
+[&lt;table&gt;mischief | bawl | sing || yell | drink]
+
+[&lt;abstract&gt;Marauder]&lt;:--[Pirate]
+[Pirate]- 0..7[mischief]
+[jollyness]_&gt;[Pirate]
+[jollyness]-&gt;[rum]
+[jollyness]-&gt;[singing]
+[Pirate]-&gt; *[rum|tastiness: Int|swig()]
+[Pirate]-&gt;[singing]
+[singing]&lt;-&gt;[rum]
+
+[&lt;start&gt;st]-&gt;[&lt;state&gt;plunder]
+[plunder]-&gt;[&lt;choice&gt;more loot]
+[more loot]-&gt;[st]
+[more loot] no -&gt;[&lt;end&gt;e]
+
+[&lt;actor&gt;Sailor] - [&lt;usecase&gt;shiver me;timbers]</code></pre>
+<div id="htmlwidget-9" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n#import: filename\n#arrowSize: 1\n#bendSize: 0.3\n#direction: down | right\n#gutter: 5\n#edgeMargin: 0\n#gravity: 1\n#edges: hard | rounded\n#background: lightgrey\n\n//nested list of colours\n//#fill: #fcfcfc; #eee8d5; #fdf6e3\n#fill: lightgreen; pink;\n#fillArrows: false\n#font: Calibri\n#fontSize: 12\n#leading: 1.25\n#lineWidth: 3\n#padding: 8\n#spacing: 40\n#stroke: #33322E\n#title: filename\n#zoom: 1\n#acyclicer: greedy\n#ranker: network-simplex | tight-tree | longest-path\n[Pirate|eyeCount: Int|raid()|pillage()|\n  [beard]--[parrot]\n  [beard]-:>[foul mouth]\n  ]\n\n[<table>mischief | bawl | sing || yell | drink]\n\n[<abstract>Marauder]<:--[Pirate]\n[Pirate]- 0..7[mischief]\n[jollyness]_>[Pirate]\n[jollyness]->[rum]\n[jollyness]->[singing]\n[Pirate]-> *[rum|tastiness: Int|swig()]\n[Pirate]->[singing]\n[singing]<->[rum]\n\n[<start>st]->[<state>plunder]\n[plunder]->[<choice>more loot]\n[more loot]->[st]\n[more loot] no ->[<end>e]\n\n[<actor>Sailor] - [<usecase>shiver me;timbers]","svg":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="custom-classifier-styles" class="section level2">
+<h2>Custom classifier styles</h2>
+<p>A directive that starts with “.” define a <strong>classifier’s style</strong>. The style is written as a space separated list of <em>modifiers</em> and <em>key/value pairs</em>.</p>
+<pre class="nomnoml"><code>#.box: fill=#8f8 dashed
+#.blob: visual=ellipse title=bold
+#.arvind: visual=rhomb title=bold dashed fill=CornFlowerBlue
+[&lt;box&gt; GreenBox]
+[&lt;blob&gt; Blobby]
+[&lt;arvind&gt; Someone]</code></pre>
+<div id="htmlwidget-10" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-10">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n#.box: fill=#8f8 dashed\n#.blob: visual=ellipse title=bold\n#.arvind: visual=rhomb title=bold dashed fill=CornFlowerBlue\n[<box> GreenBox]\n[<blob> Blobby]\n[<arvind> Someone]","svg":false},"evals":[],"jsHooks":[]}</script>
+<p>##Key/value pairs
+fill=(any css color)
+stroke=(any css color)
+align=center
+align=left
+direction=right
+direction=down</p>
+<p>visual=actor
+visual=class
+visual=database
+visual=ellipse
+visual=end
+visual=frame
+visual=hidden
+visual=input
+visual=none
+visual=note
+visual=package
+visual=receiver
+visual=rhomb
+visual=roundrect
+visual=sender
+visual=start
+visual=sync
+visual=table
+visual=transceiver
+Style title and text body
+title=left,italic,bold
+body=center,italic,bold</p>
+</div>
+<div id="text-modifiers" class="section level2">
+<h2>Text modifiers</h2>
+<p>bold
+center
+italic
+left
+underline</p>
+<pre class="nomnoml"><code># .box: fill=#8f8 dashed
+# .blob: visual=rhomb title=bold fill=#8f8 dashed
+
+[A]-[B]
+[B]--[&lt;usecase&gt;C]
+[C]-[&lt;box&gt; D]
+[B]--[&lt;blob&gt; Jabba;TheHut]</code></pre>
+<div id="htmlwidget-11" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-11">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n# .box: fill=#8f8 dashed\n# .blob: visual=rhomb title=bold fill=#8f8 dashed\n\n[A]-[B]\n[B]--[<usecase>C]\n[C]-[<box> D]\n[B]--[<blob> Jabba;TheHut]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>[a] -&gt;[b]
+[b] -:&gt; [c]
+[c]o-&gt;[d]
+[d]-/-[e]</code></pre>
+<div id="htmlwidget-12" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-12">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n[a] ->[b]\n[b] -:> [c]\n[c]o->[d]\n[d]-/-[e]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>#fill: lightgreen; lightblue; lightyellow; grey; white
+
+[&lt;table&gt; table | c | 9 ]
+
+[R | [&lt;table&gt; Packages |
+         Base R |
+         [ &lt;table&gt; tidyverse| ggplot | tidyr | readr |
+             [&lt;table&gt; dplyr|
+                 magrittr | Others]]]]</code></pre>
+<div id="htmlwidget-13" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-13">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n#fill: lightgreen; lightblue; lightyellow; grey; white\n\n[<table> table | c | 9 ]\n\n[R | [<table> Packages |\n         Base R |\n         [ <table> tidyverse| ggplot | tidyr | readr |\n             [<table> dplyr|\n                 magrittr | Others]]]]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>#fill: lightgreen; lightblue; lightyellow; pink; white
+
+[RStudio | [R | [&lt;table&gt; Packages |
+                   Base R | [ tidyverse |
+                               ggplot | tidyr | readr |
+                               [dplyr]--[magrittr]
+                               [dplyr]--[Others]
+                             | tibble
+                             ]
+                 | lubridate | DiagrammeR | Lattice]]]</code></pre>
+<div id="htmlwidget-14" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-14">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n#fill: lightgreen; lightblue; lightyellow; pink; white\n\n[RStudio | [R | [<table> Packages |\n                   Base R | [ tidyverse |\n                               ggplot | tidyr | readr |\n                               [dplyr]--[magrittr]\n                               [dplyr]--[Others]\n                             | tibble\n                             ]\n                 | lubridate | DiagrammeR | Lattice]]]","svg":false},"evals":[],"jsHooks":[]}</script>
+<pre class="nomnoml"><code>[Linux]+-[Ubuntu]
+[Linux]+-[Mint]
+[Ubuntu]--[Mint]
+[Linux]+-[Rosa Linux]
+[Linux]+-[Mx Linux]
+[Debian]-+[Linux]
+[Linux]--[Manjaro]
+[Manjaro]-+[Suse]
+
+[Fedora]-+[Linux]
+[Puppy Linux]-+[Linux]
+[Personal Pups]-+[Puppy Linux]</code></pre>
+<div id="htmlwidget-15" style="width:672px;height:480px;" class="nomnoml html-widget"></div>
+<script type="application/json" data-for="htmlwidget-15">{"x":{"code":"\n#fill: #FEFEFF\n#lineWidth: 1\n#zoom: 4\n#direction: right\n\n[Linux]+-[Ubuntu]\n[Linux]+-[Mint]\n[Ubuntu]--[Mint]\n[Linux]+-[Rosa Linux]\n[Linux]+-[Mx Linux]\n[Debian]-+[Linux]\n[Linux]--[Manjaro]\n[Manjaro]-+[Suse]\n\n[Fedora]-+[Linux]\n[Puppy Linux]-+[Linux]\n[Personal Pups]-+[Puppy Linux]\n","svg":false},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
