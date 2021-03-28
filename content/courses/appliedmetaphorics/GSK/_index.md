@@ -1,7 +1,7 @@
 ---
 date: "2021-01-24"
 linkTitle: Generic Skills Modules
-summary: An example of using Wowchemy's Book layout for publishing online courses.
+summary: A collection of RMarkdown based modules for code-based Metaphors
 title: "\U0001F4CA Generic Skills Modules"
 type: book
 ---
