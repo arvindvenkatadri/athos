@@ -7,14 +7,12 @@ output:
   xaringan::moon_reader:
     css: xaringan-themer.css
     keep_md: true
-    code_download: true
     nature:
       slideNumberFormat: "%current%"
       highlightStyle: github
       highlightLines: true
       ratio: 16:9
       countIncrementalSlides: true
-      
 ---
 
 ```{r setup, include=FALSE}
