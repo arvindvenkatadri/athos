@@ -5,6 +5,7 @@ date: "26 March 2021"
 output:
   word_document: default
   html_document: default
+    code_download: true
   pdf_document: default
 ---
 

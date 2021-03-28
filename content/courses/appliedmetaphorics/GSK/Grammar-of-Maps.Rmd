@@ -3,8 +3,9 @@ title: "The Grammar of Maps"
 author: "Arvind Venkatadri"
 date: "19/Feb/2021"
 output:
-  pdf_document: default
   html_document: default
+    code_download: true
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
