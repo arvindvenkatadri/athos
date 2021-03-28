@@ -1,12 +1,13 @@
 ---
-title: "Installing R and RStudio"
-subtitle:  
-author: "Arvind Venkatadri"
+title: "Starting with R and RStudio"
+subtitle: ""  
+author: 
+  - "Arvind Venkatadri"
+
 date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
-    keep_md: true
     nature:
       slideNumberFormat: "%current%"
       highlightStyle: github
@@ -36,8 +37,6 @@ style_duo_accent(
   secondary_color = "#FF961C",
   inverse_header_color = "#FFFFFF"
 )
-library(emo)
-library(emojifont)
 ```
 
 layout: true
@@ -52,7 +51,7 @@ layout: true
 
 3. [Go to the RStudio Download page](http://www.rstudio.com/ide/download/desktop)
 
-4. Under **`All Installers`** select RStudio current version ## - Windows XP/Vista/7/8/10.
+4. Under **`All Installers`** select RStudio current version ##- Windows XP/Vista/7/8/10.
 
 5. Double click the file to install it.
 
@@ -149,3 +148,15 @@ Click on: **Tools -> Global Options**:
 layout:false
 class: inverse center middle
 # You R good to go!!
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R packages:
+
+[**xaringan**](https://github.com/yihui/xaringan)<br>
+[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
