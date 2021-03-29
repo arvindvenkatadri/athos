@@ -19,7 +19,7 @@ interests:
 organizations:
 - name: Srishti Manipal Institute of Art, Design, and Technology
   url: https://www.srishtimanipalinstitute.in/
-role: Faculty Member
+role: Faculty Member, SMI-MAHE, India
 social:
 - icon: envelope
   icon_pack: fas

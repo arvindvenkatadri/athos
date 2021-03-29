@@ -2,7 +2,7 @@
 # An instance of the Experience widget.
 # Documentation: https://wowchemy.com/docs/page-builder/
 widget: experience
-view: 4
+view: 5
 
 # This file represents a page section.
 headless: true
