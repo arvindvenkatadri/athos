@@ -2,7 +2,7 @@
 date: "2021-01-24"
 linkTitle: How Things Work
 summary: A 5 week course that teaches how to use Complexity Science and apply it to real life.
-title: "\U0001FA9A How Things Work"
+title: "\U0001F527 How Things Work"
 type: book
 ---
 

@@ -6,7 +6,7 @@ title: "\U0001F9ED Applied Metaphorics"
 type: book
 ---
 
-{{< figure src="inventor.jpg" >}}
+{{< figure src="inventor.jpg" height=1 >}}
 
 {{< toc hide_on="xl" >}}
 
