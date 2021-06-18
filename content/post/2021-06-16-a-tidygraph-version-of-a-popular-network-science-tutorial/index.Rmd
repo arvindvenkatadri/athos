@@ -6,7 +6,7 @@ slug: a-tidygraph-version-of-a-popular-network-science-tutorial
 categories: [R; Networks]
 tags: [tidygraph; ggraph;]
 subtitle: ''
-summary: 'A reworking of @Ognyanova  tutorial using tidygraph'
+summary: 'A reworking of a Network Science tutorial by Prof. Katherine Ognyanova, using tidygraph'
 authors: []
 lastmod: '2021-06-16T17:29:47+05:30'
 featured: no
@@ -20,25 +20,26 @@ projects: []
 
 ## Introduction
 
-This is an attempt to rework , using `tidygraph`  and `ggraph`, much of [**Network Visualization with R**](www.kateto.net/polnet2018) Polnet 2018 Workshop Tutorial, Washington, DC by Katherine (Katya) Ognyanova.
+This is an attempt to rework , using `tidygraph`  and `ggraph`, much of [**Network Visualization with R**](https://www.kateto.net/polnet2018) Polnet 2018 Workshop Tutorial, Washington, DC by Prof. Katherine (Katya) Ognyanova.
 
 The aim is to get a working acquaintance with both these packages and also to appreciate some of the concepts in Networks. My code is by no means intended to be elegant; it merely works and there are surely many improvements that people may think of!
 
-I have retained Prof. Ognyanova's text in all places. 
+I have attempted to write code for the Sections 2:5. 
 
+I have retained Prof. Ognyanova's text in all places. 
 
 ## CONTENTS
 
-   1. ~Working with colors in R plots~
+   1. ~~Working with colors in R plots~~
    2. Reading in the network data
    3. Network plots in 'igraph'
    4. Plotting two-mode networks
    5. Plotting multiplex networks
-   6. ~Quick example using 'network'~
-   7. ~Simple plot animations in R~
-   8. ~Interactive JavaScript networks~
-   9. ~Interactive and dynamic networks with ndtv-d3~
-  10. ~Plotting networks on a geographic map~
+   6. ~~Quick example using 'network'~~
+   7. ~~Simple plot animations in R~~
+   8. ~~Interactive JavaScript networks~~
+   9. ~~Interactive and dynamic networks with ndtv-d3~~
+  10. ~~Plotting networks on a geographic map~~
 
 ```{r setup,include=FALSE}
 knitr::opts_chunk$set(cache = TRUE,fig.width = 7, fig.height = 5)
@@ -164,6 +165,10 @@ tbl_graph(nodes, links, directed = TRUE)%>%
 # You can also access the network matrix directly:
 net[1,]
 net[5,7]
+
+# Using tidygraph
+# Does not seem possible, even with `as.matrix()`.
+# Returns tibbles only as in the code chunk above
 ```
 
 
@@ -213,8 +218,7 @@ tbl_graph(nodes, links, directed = TRUE) %>%
     color = "grey",
     end_cap = circle(0.2, "cm"),
     start_cap = circle(0.2, "cm"),
-    # clears an area near the node
-    
+ 
     arrow = arrow(
       type = "closed",
       ends = "last",
@@ -317,8 +321,7 @@ graph %>% ggraph(., layout = "graphopt") +
     color = "grey",
     strength = 0.1,
     end_cap = circle(.2, "cm"),
-    # clears an area near the node
-    
+
     arrow = arrow(
       type = "closed",
       ends = "both",
@@ -338,24 +341,38 @@ graph %>% ggraph(., layout = "graphopt") +
 - Replace the vertex label with the node names stored in "media"
 
 ```{r}
-plot(net, edge.arrow.size = .2, edge.curved = 0,
-     vertex.color = "orange", vertex.frame.color = "#555555",
-     vertex.label = V(net)$media, vertex.label.color = "black",
-     vertex.label.cex = .7)
+plot(
+  net,
+  edge.arrow.size = .2,
+  edge.curved = 0,
+  vertex.color = "orange",
+  vertex.frame.color = "#555555",
+  vertex.label = V(net)$media,
+  vertex.label.color = "black",
+  vertex.label.cex = .7
+)
 
 # Using tidygraph
-#graph <- tbl_graph(nodes, links, directed = TRUE) 
+#graph <- tbl_graph(nodes, links, directed = TRUE)
 #graph
-graph %>% 
-  ggraph(., layout = "gem") + 
-  geom_edge_link(color = "grey",
-                 end_cap = circle(.3,"cm"), 
-                 # clears an area near the node
-                 
-                 arrow = arrow(type = "closed", 
-                               ends = "both", 
-                               length = unit(1, "mm"))) + 
-  geom_node_point(fill = "orange", shape = 21, size = 6, color = "#555555") + 
+graph %>%
+  ggraph(., layout = "gem") +
+  geom_edge_link(
+    color = "grey",
+    end_cap = circle(.3, "cm"),
+    
+    arrow = arrow(
+      type = "closed",
+      ends = "both",
+      length = unit(1, "mm")
+    )
+  ) +
+  geom_node_point(
+    fill = "orange",
+    shape = 21,
+    size = 6,
+    color = "#555555"
+  ) +
   geom_node_text(aes(label = media))
 
 ```
@@ -485,26 +502,28 @@ NOTE: The source node colour has been set using the `media.type`, which is a nod
 # Make a "combo" data frame of nodes *and* edges with left_join()
 # Join by `from` so that type.label is based on from = edge.start
 
-links %>% 
+links %>%
   left_join(., nodes, by = c("from" = "id")) %>%
-  tbl_graph(edges = ., nodes = nodes) %>% 
-
+  tbl_graph(edges = ., nodes = nodes) %>%
+  
   mutate(size = centrality_degree()) %>%
   
   ggraph(., layout = "lgl") +
-  geom_edge_arc(aes(color = type.label, 
-                    width = weight), 
+  geom_edge_arc(aes(color = type.label,
+                    width = weight),
                 strength = 0.3)  +
   geom_node_point(aes(fill = type.label,
-                      # type.label is available as edge attribute
+                      # type.label is now available as edge attribute
                       size = size),
                   shape = 21,
                   color = "black") +
   scale_fill_manual(
     name = "Media Type",
     values = c("grey50", "gold", "tomato"),
-    guide = "legend") +
-  scale_edge_color_manual(name = "Source Type", values = c("grey80", "gold", "tomato"))+ 
+    guide = "legend"
+  ) +
+  scale_edge_color_manual(name = "Source Type",
+                          values = c("grey80", "gold", "tomato")) +
   scale_edge_width(range = c(0.2, 1.5), guide = "none") +
   scale_size_continuous("Degree", range =  c(2, 16)) +
   # not "limits"!
@@ -781,9 +800,7 @@ graph %>%
   
 ```
 
- Another way to think about this is to plot the two tie types
- (hyperlinks and mentions) separately. We will do that in
- section 5 of this tutorial: Plotting multiplex networks.
+Another way to think about this is to plot the two tie types (hyperlinks and mentions) separately. We will do that in section 5 of this tutorial: Plotting multiplex networks.
  
 ### Community Detection
 
@@ -1454,9 +1471,9 @@ rasterImage(img.3,  xleft = -1.7, xright = 0, ybottom = -1.2, ytop = 0)
 
 
 ```{r}
-# Using ~tidygraph~ visNetwork
+# Using ~~tidygraph~~ visNetwork
 # See this cheatsheet:
-#system.file("fontAwesome/Font_Awesome_Cheatsheet.pdf", package = "visNetwork")
+# system.file("fontAwesome/Font_Awesome_Cheatsheet.pdf", package = "visNetwork")
 library(visNetwork)
 
 as_tbl_graph(x = links2, directed = TRUE) %>%
@@ -1503,26 +1520,32 @@ plot(
 ```{r}
 # Using tidygraph
 # Calculate projections and add attributes/labels
-proj1 <- as_incidence_matrix(net2)  %*% t(as_incidence_matrix(net2)) %>% 
-  as_tbl_graph() %>% 
-  activate(nodes) %>% 
+proj1 <-
+  as_incidence_matrix(net2)  %*% t(as_incidence_matrix(net2)) %>%
+  as_tbl_graph() %>%
+  activate(nodes) %>%
   left_join(., nodes2, by = c("name" = "id"))
-proj2 <- t(as_incidence_matrix(net2)) %*%   as_incidence_matrix(net2) %>% as_tbl_graph() %>% 
-  activate(nodes) %>% 
+proj2 <-
+  t(as_incidence_matrix(net2)) %*%   as_incidence_matrix(net2) %>% as_tbl_graph() %>%
+  activate(nodes) %>%
   left_join(., nodes2, by = c("name" = "id"))
 
-#overlay = igraph::layout_with_graphopt(net2)
 
-p1 <- proj1 %>% 
-  ggraph(layout = "graphopt") + 
-  geom_edge_link0() + 
-  geom_node_point(size = 6, colour = "orange") + 
-  geom_node_text(aes(label = media),repel = TRUE)
+p1 <- proj1 %>%
+  ggraph(layout = "graphopt") +
+  geom_edge_link0() +
+  geom_node_point(size = 6, colour = "orange") +
+  geom_node_text(aes(label = media), repel = TRUE)
 
-p2 <- proj2 %>% 
-  ggraph(layout = "graphopt") + 
-  geom_edge_link0() + 
-  geom_node_point(aes(colour = media.type), size = 6, shape  =15, colour = "dodgerblue") + 
+p2 <- proj2 %>%
+  ggraph(layout = "graphopt") +
+  geom_edge_link0() +
+  geom_node_point(
+    aes(colour = media.type),
+    size = 6,
+    shape  = 15,
+    colour = "dodgerblue"
+  ) +
   geom_node_text(aes(label = media), repel = TRUE)
 
 p1 + p2
@@ -1626,7 +1649,7 @@ wrap_plots(p1, p2,guides = "collect") &
 
 In our example network, we don't have **node dyads** connected by multiple types of connections (we never have both a 'hyperlink' and a 'mention' tie between the same two news outlets) -- however that could happen.
 
-See the edges between `s03` and `s10`...these are in opposite directions. 
+Note: See the edges between `s03` and `s10`...these are in opposite directions. So no dyads.
 
 ```{r}
 layout <- layout_in_circle(net)
@@ -1708,5 +1731,5 @@ ggraph(., layout = l) +
 ```
 
 
- And that is the end of this reoworked tutorial! Hope you enjoyed it and found it useful!!
+And that is the end of this reoworked tutorial! Hope you enjoyed it and found it useful!!
  

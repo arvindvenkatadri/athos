@@ -6,7 +6,7 @@ slug: a-tidygraph-version-of-a-popular-network-science-tutorial
 categories: [R; Networks]
 tags: [tidygraph; ggraph;]
 subtitle: ''
-summary: 'A reworking of @Ognyanova  tutorial using tidygraph'
+summary: 'A reworking of a Network Science tutorial by Prof. Katherine Ognyanova, using tidygraph'
 authors: []
 lastmod: '2021-06-16T17:29:47+05:30'
 featured: no
@@ -27,23 +27,24 @@ projects: []
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>This is an attempt to rework , using <code>tidygraph</code> and <code>ggraph</code>, much of <a href="www.kateto.net/polnet2018"><strong>Network Visualization with R</strong></a> Polnet 2018 Workshop Tutorial, Washington, DC by Katherine (Katya) Ognyanova.</p>
+<p>This is an attempt to rework , using <code>tidygraph</code> and <code>ggraph</code>, much of <a href="https://www.kateto.net/polnet2018"><strong>Network Visualization with R</strong></a> Polnet 2018 Workshop Tutorial, Washington, DC by Prof. Katherine (Katya) Ognyanova.</p>
 <p>The aim is to get a working acquaintance with both these packages and also to appreciate some of the concepts in Networks. My code is by no means intended to be elegant; it merely works and there are surely many improvements that people may think of!</p>
+<p>I have attempted to write code for the Sections 2:5.</p>
 <p>I have retained Prof. Ognyanova’s text in all places.</p>
 </div>
 <div id="contents" class="section level2">
 <h2>CONTENTS</h2>
 <ol style="list-style-type: decimal">
-<li>~Working with colors in R plots~</li>
+<li><del>Working with colors in R plots</del></li>
 <li>Reading in the network data</li>
 <li>Network plots in ‘igraph’</li>
 <li>Plotting two-mode networks</li>
 <li>Plotting multiplex networks</li>
-<li>~Quick example using ‘network’~</li>
-<li>~Simple plot animations in R~</li>
-<li>~Interactive JavaScript networks~</li>
-<li>~Interactive and dynamic networks with ndtv-d3~</li>
-<li>~Plotting networks on a geographic map~</li>
+<li><del>Quick example using ‘network’</del></li>
+<li><del>Simple plot animations in R</del></li>
+<li><del>Interactive JavaScript networks</del></li>
+<li><del>Interactive and dynamic networks with ndtv-d3</del></li>
+<li><del>Plotting networks on a geographic map</del></li>
 </ol>
 </div>
 <div id="dataset-1-edgelist--" class="section level2">
@@ -421,6 +422,9 @@ net[1,]</code></pre>
 ##   0  22  22  21   0   0   0   0   0   0   0   0   0   0  20   0   0</code></pre>
 <pre class="r"><code>net[5,7]</code></pre>
 <pre><code>## [1] 0</code></pre>
+<pre class="r"><code># Using tidygraph
+# Does not seem possible, even with `as.matrix()`.
+# Returns tibbles only as in the code chunk above</code></pre>
 <pre class="r"><code># First attempt to plot the graph:
 plot(net) # not pretty!</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
@@ -461,8 +465,7 @@ tbl_graph(nodes, links, directed = TRUE) %&gt;%
     color = &quot;grey&quot;,
     end_cap = circle(0.2, &quot;cm&quot;),
     start_cap = circle(0.2, &quot;cm&quot;),
-    # clears an area near the node
-    
+ 
     arrow = arrow(
       type = &quot;closed&quot;,
       ends = &quot;last&quot;,
@@ -622,8 +625,7 @@ graph</code></pre>
     color = &quot;grey&quot;,
     strength = 0.1,
     end_cap = circle(.2, &quot;cm&quot;),
-    # clears an area near the node
-    
+
     arrow = arrow(
       type = &quot;closed&quot;,
       ends = &quot;both&quot;,
@@ -642,24 +644,38 @@ graph</code></pre>
 <li>Set node color to orange and the border color to hex 555555</li>
 <li>Replace the vertex label with the node names stored in “media”</li>
 </ul>
-<pre class="r"><code>plot(net, edge.arrow.size = .2, edge.curved = 0,
-     vertex.color = &quot;orange&quot;, vertex.frame.color = &quot;#555555&quot;,
-     vertex.label = V(net)$media, vertex.label.color = &quot;black&quot;,
-     vertex.label.cex = .7)</code></pre>
+<pre class="r"><code>plot(
+  net,
+  edge.arrow.size = .2,
+  edge.curved = 0,
+  vertex.color = &quot;orange&quot;,
+  vertex.frame.color = &quot;#555555&quot;,
+  vertex.label = V(net)$media,
+  vertex.label.color = &quot;black&quot;,
+  vertex.label.cex = .7
+)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre class="r"><code># Using tidygraph
-#graph &lt;- tbl_graph(nodes, links, directed = TRUE) 
+#graph &lt;- tbl_graph(nodes, links, directed = TRUE)
 #graph
-graph %&gt;% 
-  ggraph(., layout = &quot;gem&quot;) + 
-  geom_edge_link(color = &quot;grey&quot;,
-                 end_cap = circle(.3,&quot;cm&quot;), 
-                 # clears an area near the node
-                 
-                 arrow = arrow(type = &quot;closed&quot;, 
-                               ends = &quot;both&quot;, 
-                               length = unit(1, &quot;mm&quot;))) + 
-  geom_node_point(fill = &quot;orange&quot;, shape = 21, size = 6, color = &quot;#555555&quot;) + 
+graph %&gt;%
+  ggraph(., layout = &quot;gem&quot;) +
+  geom_edge_link(
+    color = &quot;grey&quot;,
+    end_cap = circle(.3, &quot;cm&quot;),
+    
+    arrow = arrow(
+      type = &quot;closed&quot;,
+      ends = &quot;both&quot;,
+      length = unit(1, &quot;mm&quot;)
+    )
+  ) +
+  geom_node_point(
+    fill = &quot;orange&quot;,
+    shape = 21,
+    size = 6,
+    color = &quot;#555555&quot;
+  ) +
   geom_node_text(aes(label = media))</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
 <p>The second way to set attributes is to <strong>add them</strong> to the igraph object.</p>
@@ -761,26 +777,28 @@ plot(net, edge.color = edge.col, edge.curved = .4)</code></pre>
 # Make a &quot;combo&quot; data frame of nodes *and* edges with left_join()
 # Join by `from` so that type.label is based on from = edge.start
 
-links %&gt;% 
+links %&gt;%
   left_join(., nodes, by = c(&quot;from&quot; = &quot;id&quot;)) %&gt;%
-  tbl_graph(edges = ., nodes = nodes) %&gt;% 
-
+  tbl_graph(edges = ., nodes = nodes) %&gt;%
+  
   mutate(size = centrality_degree()) %&gt;%
   
   ggraph(., layout = &quot;lgl&quot;) +
-  geom_edge_arc(aes(color = type.label, 
-                    width = weight), 
+  geom_edge_arc(aes(color = type.label,
+                    width = weight),
                 strength = 0.3)  +
   geom_node_point(aes(fill = type.label,
-                      # type.label is available as edge attribute
+                      # type.label is now available as edge attribute
                       size = size),
                   shape = 21,
                   color = &quot;black&quot;) +
   scale_fill_manual(
     name = &quot;Media Type&quot;,
     values = c(&quot;grey50&quot;, &quot;gold&quot;, &quot;tomato&quot;),
-    guide = &quot;legend&quot;) +
-  scale_edge_color_manual(name = &quot;Source Type&quot;, values = c(&quot;grey80&quot;, &quot;gold&quot;, &quot;tomato&quot;))+ 
+    guide = &quot;legend&quot;
+  ) +
+  scale_edge_color_manual(name = &quot;Source Type&quot;,
+                          values = c(&quot;grey80&quot;, &quot;gold&quot;, &quot;tomato&quot;)) +
   scale_edge_width(range = c(0.2, 1.5), guide = &quot;none&quot;) +
   scale_size_continuous(&quot;Degree&quot;, range =  c(2, 16)) +
   # not &quot;limits&quot;!
@@ -1141,9 +1159,7 @@ graph</code></pre>
   guides(fill = guide_legend(override.aes = list(pch = 21,
                                                  size = 4)))</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-45-2.png" width="672" /></p>
-<p>Another way to think about this is to plot the two tie types
-(hyperlinks and mentions) separately. We will do that in
-section 5 of this tutorial: Plotting multiplex networks.</p>
+<p>Another way to think about this is to plot the two tie types (hyperlinks and mentions) separately. We will do that in section 5 of this tutorial: Plotting multiplex networks.</p>
 <div id="community-detection" class="section level3">
 <h3>Community Detection</h3>
 <p>We can also try to make the network map more useful by showing the communities within it.</p>
@@ -1864,9 +1880,9 @@ rasterImage(img.3,  xleft = -1.7, xright = 0, ybottom = -1.2, ytop = 0)</code></
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <pre class="r"><code># The numbers after the image are coordinates for the plot.
 # The limits of your plotting area are given in par()$usr</code></pre>
-<pre class="r"><code># Using ~tidygraph~ visNetwork
+<pre class="r"><code># Using ~~tidygraph~~ visNetwork
 # See this cheatsheet:
-#system.file(&quot;fontAwesome/Font_Awesome_Cheatsheet.pdf&quot;, package = &quot;visNetwork&quot;)
+# system.file(&quot;fontAwesome/Font_Awesome_Cheatsheet.pdf&quot;, package = &quot;visNetwork&quot;)
 library(visNetwork)
 
 as_tbl_graph(x = links2, directed = TRUE) %&gt;%
@@ -1960,26 +1976,32 @@ plot(
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 <pre class="r"><code># Using tidygraph
 # Calculate projections and add attributes/labels
-proj1 &lt;- as_incidence_matrix(net2)  %*% t(as_incidence_matrix(net2)) %&gt;% 
-  as_tbl_graph() %&gt;% 
-  activate(nodes) %&gt;% 
+proj1 &lt;-
+  as_incidence_matrix(net2)  %*% t(as_incidence_matrix(net2)) %&gt;%
+  as_tbl_graph() %&gt;%
+  activate(nodes) %&gt;%
   left_join(., nodes2, by = c(&quot;name&quot; = &quot;id&quot;))
-proj2 &lt;- t(as_incidence_matrix(net2)) %*%   as_incidence_matrix(net2) %&gt;% as_tbl_graph() %&gt;% 
-  activate(nodes) %&gt;% 
+proj2 &lt;-
+  t(as_incidence_matrix(net2)) %*%   as_incidence_matrix(net2) %&gt;% as_tbl_graph() %&gt;%
+  activate(nodes) %&gt;%
   left_join(., nodes2, by = c(&quot;name&quot; = &quot;id&quot;))
 
-#overlay = igraph::layout_with_graphopt(net2)
 
-p1 &lt;- proj1 %&gt;% 
-  ggraph(layout = &quot;graphopt&quot;) + 
-  geom_edge_link0() + 
-  geom_node_point(size = 6, colour = &quot;orange&quot;) + 
-  geom_node_text(aes(label = media),repel = TRUE)
+p1 &lt;- proj1 %&gt;%
+  ggraph(layout = &quot;graphopt&quot;) +
+  geom_edge_link0() +
+  geom_node_point(size = 6, colour = &quot;orange&quot;) +
+  geom_node_text(aes(label = media), repel = TRUE)
 
-p2 &lt;- proj2 %&gt;% 
-  ggraph(layout = &quot;graphopt&quot;) + 
-  geom_edge_link0() + 
-  geom_node_point(aes(colour = media.type), size = 6, shape  =15, colour = &quot;dodgerblue&quot;) + 
+p2 &lt;- proj2 %&gt;%
+  ggraph(layout = &quot;graphopt&quot;) +
+  geom_edge_link0() +
+  geom_node_point(
+    aes(colour = media.type),
+    size = 6,
+    shape  = 15,
+    colour = &quot;dodgerblue&quot;
+  ) +
   geom_node_text(aes(label = media), repel = TRUE)
 
 p1 + p2</code></pre>
@@ -2068,7 +2090,7 @@ wrap_plots(p1, p2,guides = &quot;collect&quot;) &amp;
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>In our example network, we don’t have <strong>node dyads</strong> connected by multiple types of connections (we never have both a ‘hyperlink’ and a ‘mention’ tie between the same two news outlets) – however that could happen.</p>
-<p>See the edges between <code>s03</code> and <code>s10</code>…these are in opposite directions.</p>
+<p>Note: See the edges between <code>s03</code> and <code>s10</code>…these are in opposite directions. So no dyads.</p>
 <pre class="r"><code>layout &lt;- layout_in_circle(net)
 tbl_graph(nodes, links, directed = TRUE) %&gt;%  
   activate(nodes) %&gt;% 
