@@ -22,9 +22,9 @@ main:
   # - name: Publications
   #   url: '#featured'
   #   weight: 40
-  # - name: Contact
-  #   url: '#contact'
-  #   weight: 70
+  - name: Contact
+    url: '#contact'
+    weight: 70
 
   # - name: Resume
   #   url: '/resume'
